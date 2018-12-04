@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+//La coppia di parole chiave async/await di propone di andare oltre, 
+//consentendo la scrittura di codice asincrono pur mantenendo una struttura di codice tipico della programmazione sincrona
+//semplificano la sintassi. Infatti, async e await si basano sul meccanismo delle Promise e il loro risultato è compatibile con qualsiasi API che utilizza le Promise
+function getUtente(userId) {
+    fetch("/utente/" + userId).then(response => {
+       console.log(response);
+    }).catch(error => console.log("Si è verificato un errore!"));
+ }
+
+//stessa funzione come quela precedente ma riscritta con async/await
+ async function getUtente2(userId) { //uso della parola chiave async per indicare che all’interno di essa verrà eseguita una operazione asincrona
+    try {
+        //presenza di await davanti all’invocazione di fetch(). Questo accorgimento fa in modo che l’esecuzione della funzione getUtente() venga sospesa all’avvio dell’operazione asincrona e venga poi 
+        //automaticamente ripresa quando viene ottenuto un risultato, cioè quando la Promise associata a fetch() viene risolta o rigettata
+       let response = await fetch("/utente/" + userId);
+       console.log(response);
+    } catch (e) {
+       console.log("Si è verificato un errore!");
+    }
+ }
+
+
+ async function getBlogAndPhoto(userId) {
+    try {
+        //qui ciascuna funzione asincrona viene eseguita e solo che la promise viene
+        //risolta o rigettava passa alla successiva.... così non ha molto senso
+        //se vogliamo trarre beneficio dall'esecuzione parallela si veda la funzione successiva
+       let utente = await fetch("/utente/" + userId);
+       let blog = await fetch("/blog/" + utente.blogId);
+       let foto = await fetch("/photo/" + utente.albumId);
+       return {
+          utente,
+          blog,
+          foto
+       };
+    } catch (e) {
+       console.log("Si è verificato un errore!");
+    }
+ }
+//In questo caso attendiamo il completamento del caricamento dei dati dell’utente, 
+//requisito essenziale per recuperare le altre informazioni, e quindi rimaniamo 
+//in attesa del caricamento in parallelo dei dati del blog e delle foto
+ async function getBlogAndPhoto(userId) {
+    try {
+       let utente = await fetch("/utente/" + userId);
+       let result = await Promise.all([
+          fetch("/blog/" + utente.blogId),
+          fetch("/photo/" + utente.albumId)
+       ]);
+       return {
+          utente,
+          blog: result[0],
+          foto: result[1]
+       };
+    } catch (e) {
+       console.log("Si è verificato un errore!")
+    }
+ }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+     var userName = "Giuseppe";
+     //inizializzazione form
+window.addEventListener("load", function() {
+		var txtNome = document.forms.myForm.txtNome; txtNome.value = userName;
+});
+
+//Quando il contenuto del form viene annullato tramite un pulsante di tipo reset, 
+//il valore corrente di ciascun controllo del form viene riportato al suo valore iniziale.
+//Se intendiamo gestire la fase di inizializzazione del form tramite JavaScript 
+//dobbiamo tener presente che i valori impostati dinamicamente dal nostro codice non rappresentano valori iniziali, 
+//ma valori correnti
+
+//per validare il form usare gli eventi submit (basta restituire false a submit per annullare l'evento)
+//blur perdita di focus
+//change si scatena quando valore del controllo viene modificato
+
+//Altra proprietà, sicuramente molto più utile della precedente, è validity. Essa è un oggetto 
+//che ci consente di verificare se un controllo è valido e di risalire al vincolo eventualmente non rispettato
+
+
+//qui si sfruttano i constraints dell'html5 nell'evento blur
+var txtNome = document.forms.MyForm.txtNome;
+txtNome.addEventListener("blur", function(e) {
+	var messaggio = "";
+    //controlliamo se il controllo è valido
+    if (!e.target.validity.valid) {
+		if (e.target.validity.tooLong)
+			messaggio = "Superato il numero massimo di caratteri consentito! ";
+		if (e.target.validity.valueMissing)
+			messaggio = messaggio + "L'inserimento di un valore è obbligatorio! ";
+		e.target.setCustomValidity(messaggio);
+	}
+});
+
+//qui utilizziamo sempre il messaggio predefinito
+//ma implementando delle nostre regole di validazione senza usare la validazione html5
+var txtPassword1 = document.forms.MyForm.txtPassword1;
+var txtPassword2 = document.forms.MyForm.txtPassword2;
+var checkPassword = function() {
+	if (txtPassword1.value != txtPassword2.value) {
+		txtPassword1.setCustomValidity("Le password non corrispondono!");
+	} else {
+		txtPassword1.setCustomValidity("");
+	}
+}
+txtPassword1.addEventListener("change", checkPassword);
+txtPassword2.addEventListener("change", checkPassword);
+
+
+//In aggiunta alla proprietà validity, ciascun controllo e ciascun form prevede il metodo checkValidity()
+//il cui scopo è analogo a quello previsto dalla proprietà validity.valid
+//Nel caso di un singolo controllo, esso verifica la sua validità e restituisce 
+//true o false se il controllo è valido o meno. Nel caso di form, invece, il metodo checkValidity() verifica la validità di tutti i controlli contenuti in esso su cui sono impostati dei vincoli di validazione, restituendo true se sono tutti validi, false se almeno un controllo non è valido
+    </script>
+</head>
+<body>
+        <form id="myForm">
+                <input type="text" name="txtNome" />
+        </form>
+            
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body onload="inizializza()">
+    <!-- gestione inline dell’evento onload su un’immagine-->
+        <img id="img" src="miaImmagine.jpg" onload="avvisa()" />
+</body>
+<script> 
+//Iniziamo dicendo che alcuni 
+//eventi sono originati non dall’interazione diretta dell’utente con una pagina HTML ma dal browser stesso
+//Gli eventi di questo tipo, detti anche eventi di interfaccia
+//ONLOAD su body circostanza più utilizzata:Questa circostanza si verifica quando tutti gli elementi che la compongono 
+//(testo, immagini, stili e quant’altro) sono stati caricati ed è stato generato il corrispondente albero del DOM. 
+//Questo è l’evento ideale per effettuare inizializzazioni ed impostazioni prima di visualizzare il tutto all’utente
+
+window.onload = inizializza;// in alternativa alla versione inline su elemento body
+//document.onload=... si scatena prima che vengano caricate risorse e script e quindi si scatena prima di window.onload //consente di gestire l’evento load del documento, cioè la generazione del DOM, a prescindere dal caricamento delle altre risorse che compongono la pagina, come immagini, script, ecc
+function inizializza() {
+	console.log("inizializzazione qui");
+}
+function avvisa() {
+	alert("Immagine caricata!");
+}
+//oltre alla gestione inline di onload possiamo gestirlo anche in questi altri due modi
+var img = document.getElementById("img");
+img.onload = avvisa;
+// oppure ...(migliore)
+img.addEventListener("load", avvisa);
+//ATTENZIONE!!: L’evento load della pagina è un punto ideale per l’inizializzazione e 
+//perciò è molto utilizzato da diverse librerie per rendere disponibili le loro funzionalità. 
+//Se quindi nella nostra pagina facciamo uso di altre librerie, usando direttamente la proprietà o 
+//l’attributo onload per effettuare le nostre inizializzazioni rischiamo di sovrascrivere le eventuali 
+//inizializzazioni di queste librerie
+//USARE SEMPRE QUESTA MODALITA' QUANDO SI VUOLE INIZIALIZZARE SENZA CORRERE IL RISCHIO DI
+//SOVRASCRIVERE LE VOSTRE INIZIALIZZAZIONI CON LE INIZIALIZZAZIONI
+//DI ALTRE LIBRERIE
+window.addEventListener("load", inizializza);
+
+
+//window.onunload //indica quando la pagina viene scaricata perchè l’utente sta navigando verso un’altra pagina o sta chiudendo la finestra corrente
+window.onscroll = function() {
+  console.log(window.pageXOffset + "," + window.pageYOffset);
+};
+window.onresize = function() {
+  console.log(window.innerWidth + "," + window.innerHeight);
+};
+    </script>
+</html>

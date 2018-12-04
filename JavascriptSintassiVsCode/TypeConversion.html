@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var a;
+        var b=null;
+        var c=0;
+        var d=12;
+        var e=NaN;
+        var f='';
+        var g='eee';
+        debugger;
+        //var isTrueSet = (myValue == 'true');
+        var buleano= Boolean(a);
+        var buleano= Boolean(b);
+        var buleano= Boolean(c);
+        var buleano= Boolean(d);
+        var buleano= Boolean(e);
+        var buleano= Boolean(f);
+        var buleano= Boolean(g);
+
+        var h='11sadsad';
+        var stringa= Number(h);
+        /*
+        converted in BOOLEAN:
+        undefined	false
+        null	false
+        numero	false se 0 o NaN,
+        true in tutti gli altri casi
+        stringa	false se stringa vuota,
+        true in tutti gli altri casi
+
+        NUMERIC:
+        undefined	NaN
+        null	0
+        booleano	1 se true,
+        0 se false
+        stringa	intero, decimale, zero o NaN in base alla specifica stringa
+
+        STRINGA:
+        undefined	“undefined”
+        null	“null”
+        booleano	“true” se true
+        “false” se false
+        numero	“NaN” se NaN,
+        “Infinity” se Infinity
+        la stringa che rappresenta il numero negli altri casi
+
+        Come si comportano le stringhe con operatori polimorfi (+, ||, && ecc...)??
+        //**************************************************************************************************
+        la regola stabilisce che: se almeno uno dei due operandi è una stringa,
+        allora viene effettuata una concatenazione di stringhe, altrimenti viene eseguita una addizione
+        //**************************************************************************************************
+        */
+        //esempio di operatori polimorfici:
+        var x = "12";
+        var y = x + 13;//1213
+        var o = true + null; //1
+        var x = y || "";// se contiene val vuoto "" altrimenti viene assegnato valore y
+        var r;
+        debugger;
+        var z = r || 1;
+
+        /* In presenza degli operatori relazionali >, >=, < e <= si applica la seguente regola: 
+        //*********************************************************************************************
+        se nessuno dei due operandi è un numero, allora viene eseguito un confronto tra stringhe,
+        altrimenti viene eseguito un confronto tra numeri.*/
+        //*********************************************************************************************
+        /*Per quanto riguarda gli operatori di confronto == e != viene presa in considerazione 
+        la seguente regola: se entrambi gli operatori sono stringhe allora viene effettuato un
+        confronto tra stringhe, altrimenti si esegue un confronto tra numeri; unica eccezione è
+        null == undefined che è vera per definizione */
+
+        //!!!!!!
+        /* operatori di uguaglianza e disuguaglianza stretta (=== e !==). 
+        Questi operatori confrontano gli operandi senza effettuare alcuna conversione. */
+        debugger;
+        var o1=(null == undefined);
+        var o2=(null === undefined);
+        var o2=(null === null);
+        //best practice: Evitare le conversioni implicite
+        //conversioni esplicite:
+        parseInt("12")	// 12
+        parseInt("12abc")	// 12
+        parseInt("a12bc")	// NaN
+        parseInt("12.5")	// 12
+        parseInt("12", 8)	// il valore di 12 nel sistema di numerazione ottale (base 8), cioè 10
+        parseFloat("12")		//12
+        parseFloat("12.5")	//12.5
+        //verificare il tipo della variabile:
+        typeof 69 //number
+
+        var prova = new Function();
+        var numero = 1;
+        var carattere = "Salve";
+        console.log(typeof prova);     // ritorna "function"
+        console.log(typeof numero);    // ritorna "number"
+        console.log(typeof carattere); // ritorna "string"
+    </script>
+</head>
+<body>
+
+</body>
+</html>

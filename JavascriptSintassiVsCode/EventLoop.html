@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+       window.addEventListener('load',inizializza);
+         //Il modello di concorrenza in base al quale abbiamo l’illusione 
+    //che più thread siano in esecuzione è quello dell’event loop: ogni evento inserisce 
+    //un messaggio in una coda che viene elaborata sequenzialmente dal runtime di JavaScript 
+    //in un ciclo infinito
+
+    //questa è una operazione intensiva non asincrona
+    //L’utente vedrà a video soltanto l’ultimo messaggio, perdendosi tutti i messaggi precedenti. 
+    //Infatti, la modifica del contenuto di un nodo del DOM non si riflette immediatamente in 
+    //un’operazione di rendering, ma viene recepita soltato al termine del ciclo di esecuzione di JavaScript
+
+ /*   var msgDisplay = document.getElementById("msgDisplay");
+msgDisplay.innerHTML = "Elaborazione in corso: fase 1";
+for(var i = 0;i<999999999;i++){}
+msgDisplay.innerHTML = "Elaborazione in corso: fase 2";
+for(var i = 0;i<999999999;i++){}
+msgDisplay.innerHTML = "Fine elaborazione";*/
+
+
+//occorre interrompere una elaborazione intensiva e dare spazio ad aggiornamento pagina web così
+//
+function inizializza()
+{
+
+setInterval(LoopInfinito,5000)
+}
+function LoopInfinito()
+{
+    var msgDisplay = document.getElementById("msgDisplay");
+        function fase1() {
+        for(var i = 0;i<999999999;i++){}
+        msgDisplay.innerHTML = "Elaborazione in corso: fase 2";
+        setTimeout(fase2,0);
+        }
+        function fase2() {
+        for(var i = 0;i<999999999;i++){}
+        msgDisplay.innerHTML = "Fine elaborazione";
+        }
+        msgDisplay.innerHTML = "Elaborazione in corso: fase 1";
+        setTimeout(fase1,0);
+
+}
+    </script>
+</head>
+<body>
+<div id="msgDisplay"></div>
+
+
+   
+       
+</body>
+</html>

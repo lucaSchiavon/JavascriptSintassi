@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+<body>
+    <button id="btn">Make a promise!</button>
+    <div id="log"></div>
+</body>
+
+<script>
+    //https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Promise
+    'use strict';
+  var promiseCount = 0;
+  
+  function testPromise() {
+      let thisPromiseCount = ++promiseCount;
+  
+      let log = document.getElementById('log');
+      log.insertAdjacentHTML('beforeend', thisPromiseCount +
+          ') Started (<small>Sync code started</small>)<br/>');
+ 
+      // We make a new promise: we promise a numeric count of this promise, starting from 1 (after waiting 3s)
+      let p1 = new Promise(
+          // The resolver function is called with the ability to resolve or
+          // reject the promise
+          //il nuovo oggetto promise accetta come argomento una funzione esecutore che a sua volta
+          //accetta altre due funzioni:resolve che viebe eseguita in modo asincrono quando l'operazione ha successo
+          //e restituisce il risultato dell'operazione come valore
+          //la seconda reject viene eseguita nel caso l'operazione fallisse e restituisce il motivo del fallimento
+          //generalmente un oggetto error
+         (resolve, reject) => {
+              log.insertAdjacentHTML('beforeend', thisPromiseCount +
+                  ') Promise started (<small>Async code started</small>)<br/>');
+              // This is only an example to create asynchronism
+              window.setTimeout(
+                  function() {
+                      // We fulfill the promise !
+                     try
+                     {
+                        throw new Error("Eccezione volutamente sollevata"); 
+                        resolve(thisPromiseCount);
+                     }
+                    catch (e)
+                    {
+                        reject('errore nel catch gestito');
+                    }
+                     
+                      
+                  }, Math.random() * 2000 + 1000);
+          }
+      );
+  
+      // We define what to do when the promise is resolved with the then() call,
+      // and what to do when the promise is rejected with the catch() call
+     /* p1.then(
+          // Log the fulfillment value
+          function(val) {
+              log.insertAdjacentHTML('beforeend', val +
+                  ') Promise fulfilled (<small>Async code terminated</small>)<br/>');
+          }).catch(
+          // Log the rejection reason
+         (reason) => {
+              console.log('Handle rejected promise ('+reason+') here.');
+          });*/
+
+          let p2=p1.then(
+             function(val){
+                 log.insertAdjacentHTML('beforeend', val +
+                  ') Promise fulfilled (<small>Async code terminated</small>)<br/>')
+             } 
+          ).catch(
+              function(reason){
+                  console.log('Handle rejected promise ('+reason+') here.');
+              }
+          )
+
+      log.insertAdjacentHTML('beforeend', thisPromiseCount +
+          ') Promise made (<small>Sync code terminated</small>)<br/>');
+  }
+
+  
+ 
+  
+  if ("Promise" in window) {
+    let btn = document.getElementById("btn");
+   
+    btn.addEventListener("click",testPromise);
+  } else {
+    log = document.getElementById('log');
+    log.innerHTML = "Live example not available as your browser doesn't support the <code>Promise<code> interface.";
+  }
+
+      </script>
+</html>

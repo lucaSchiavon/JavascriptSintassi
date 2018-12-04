@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function persona() {
+            this.nome = "";
+            this.cognome = "";
+            this.indirizzo = "";
+            this.email = "";
+            this.mostraNomeCompleto = function () { };
+            this.calcolaCodiceFiscale = function () { };
+        }
+
+        var marioRossi = new persona();
+        marioRossi.nome = "Mario";
+        marioRossi.cognome = "Rossi";
+        var giuseppeVerdi = new persona();
+        giuseppeVerdi.nome = "Giuseppe";
+        giuseppeVerdi.cognome = "Verdi";
+
+        persona.prototype.telefono = "123456"; //aggiunge a tutte le istanze di classe il telefono!
+       // marioRossi.telefono = "0612345678"; //aggiunge solo alla specifica istanza il telefono
+     
+        console.log(marioRossi.telefono + " " + giuseppeVerdi.telefono);
+        console.log("Stop");
+
+
+       
+    </script>
+</head>
+<body>
+
+</body>
+</html>

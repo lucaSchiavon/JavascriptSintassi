@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var w = new Date();
+        var y = new Date("01/01/2013 15:30");
+        var z = new Date(2013, 1, 1, 15, 30, 0, 0);
+        //metodi per leggere anni, mesi, giorni...
+        debugger;
+        var giorno = ["domenica", "lunedì", "martedì", "mercoledì",
+            "giovedì", "venerdì", "sabato"][new Date().getDay()];
+        console.log("Oggi è " + giorno);
+
+        //metodi per impostare anno, mese giorno....
+        //imposta lo stesso giorno dell'anno successivo
+        var data = new Date();
+        data.setFullYear(data.getFullYear() + 1);
+
+        //confronto di date...
+        var scadenza = new Date(2013, 11, 10);
+        var oggi = new Date();
+        if (oggi < scadenza) messaggio = "Non ancora scaduto!";
+        if (oggi > scadenza) messaggio = "Scaduto!";
+        console.log(messaggio);
+
+        //ora di grrenwitch
+        var oggi = new Date();
+        console.log(oggi.getUTCHours());
+
+        //differenza tra ora locale e greenwitch
+        var oggi = new Date()
+        var differenza = oggi.getTimezoneOffset();
+
+       /*
+        Metodo	Descrizione
+        toDateString()	Converte la componente data in stringa, escludendo l’ora
+        toISOString()	Converte una data in stringa in formato ISO
+        toLocaleDateString()	Converte la componente data in stringa, escludendo l’ora, secondo le impostazioni locali
+        toLocaleTimeString()	Converte la componente ora in stringa, escludendo la data, secondo le impostazioni locali
+        toLocaleString()	Converte una data in stringa secondo le impostazioni locali
+        toString()	Converte una data in stringa
+        toTimeString()	Converte la componente ora in stringa, escludendo la data
+        toUTCString()	Converte una data UTC in stringa
+        */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

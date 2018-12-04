@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+      /*  var persona = {
+            nome: "Mario",
+            cognome: "Rossi"
+        };*/
+
+        var persona = new Object({
+            nome: "Mario",
+            cognome: "Rossi"
+        });
+        persona.indirizzo = "Via Garibaldi, 50 - Roma";
+        debugger;
+      delete persona.cognome;
+        persona["data di nascita"] = new Date(1991, 6, 14);
+
+      /*  var persona.mostraNomeCompleto = function () {
+            console.log(this.nome + " " + this.cognome);
+        };*/  //La definizione di un metodo infatti non è altro che l’assegnazione di una funzione ad una proprietà
+
+        //Immaginiamo però di aver bisogno di più oggetti dello stesso tipo, ad esempio di più oggetti persona, che condividono la stessa struttura:
+        //Utilizzando la notazione letterale saremmo costretti a ripetere la definizione per ciascun oggetto che vogliamo creare, 
+        //cosa indispensabile per gli elementi identificativi della persona ma inutilmente ripetitiva per le parti costanti come ad esempio i metodi
+
+        //Per evitare quindi di dover ridefinire da zero oggetti che hanno la stessa struttura possiamo ricorrere ad un costruttore
+        function persona() {
+            this.nome = "";
+            this.cognome = "";
+            this.indirizzo = "";
+            this.email = "";
+            this.mostraNomeCompleto = function () {};
+            this.calcolaCodiceFiscale = function () {};
+        }
+
+        var marioRossi = new persona();
+        marioRossi.nome = "Mario";
+        marioRossi.cognome = "Rossi";
+        var giuseppeVerdi = new persona();
+        giuseppeVerdi.nome = "Giuseppe";
+        giuseppeVerdi.cognome = "Verdi";
+
+        //costruttori con parametri:
+        function persona(nome, cognome) {
+            this.nome = nome;
+            this.cognome = cognome;
+            this.indirizzo = "";
+            this.email = "";
+            this.mostraNomeCompleto = function () {};
+            this.calcolaCodiceFiscale = function () {};
+        }
+        var marioRossi = new persona("Mario", "Rossi");
+        var giuseppeVerdi = new persona("Giuseppe", "Verdi");
+
+        //per cercare di ovviare a dimenticanze accidentali dell’operatore new 
+        //si può ricorrere ad una convenzione abbastanza diffusa che prevede l’uso del maiuscolo per la prima lettera del nome di un costruttore
+        function Persona() {
+        //...
+        }
+
+        marioRossi.telefono = "0612345678"; //aggiunge solo alla specifica istanza il telefono
+        persona.prototype.telefono = "123456"; //aggiunge a tutte le istanze di classe il telefono!
+        //Il meccanismo su cui si basa l’erediterietà prototipale (prototypal inheritance) di JavaScript 
+        //è abbastanza semplice: se una proprietà non si trova in un oggetto viene cercata nel suo prototipo.
+        //Il prototipo di un oggetto può a sua volta avere un altro prototipo
+        console.log(marioRossi.telefono + " " + giuseppeVerdi.telefono); //
+
+        //tutte le stringhe avranno ora padleft
+        String.prototype.padLeft = function (width, char) {
+            var result = this;
+            char = char || " ";
+            if (this.length < width) {
+                result = new Array(width - this.length + 1).join(char) + this;
+            }
+            return result;
+        };
+
+        console.log("abc".padLeft(10, "x"));		//"xxxxxxxabc"
+        console.log(a);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

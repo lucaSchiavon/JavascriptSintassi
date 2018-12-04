@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var persona = {
+            nome: "Mario",
+            cognome: "Rossi",
+            mostraNomeCompleto: function () {
+                return this.nome + " " + this.cognome;
+            }
+        };
+
+
+        var p;
+        for (p in persona) { console.log(p); } //per ottenere nome delle proprieta e metodi
+
+        for (p in persona) { console.log(persona[p]); } //per ottenere valore delle proprietà e metodi
+
+
+        for (p in persona) {
+            if (typeof persona[p] == "function") console.log(p); //per distinguere fra tipi, qui restituisce solo metodi
+        }
+
+        if ('nome' in persona) {
+            console.log(persona.nome);
+        } else {
+            console.log("L'oggetto persona non contiene una proprietà 'nome'");
+        }
+
+        for (p in persona) {
+            if (typeof persona[p] != "function" && persona.hasOwnProperty(p)) //restituisce nomi delle proprietà non derivate da prototipo
+                console.log(p);
+        }
+
+
+       // marioRossi instanceof persona se mariorossi è istanza del costruttore persona torna true
+
+        var prototipo = Object.getPrototypeOf(marioRossi);
+
+      //  Object.defineProperty() //crea nuove proprietà e delete epr eliminare
+
+
+        //REFLECT analizzare e manipolare oggetti ecam6... l'oggetto reflect si sovrappone a funzionalità create gia in ecma5 allora a cosa serve reflect??
+        //le funzioni per effettuare operazioni di reflection sono disomogenee: alcune sono rappresentate da metodi di Object, altre da istruzioni del linguaggio
+        //reflect le centralizza
+        Reflect.getOwnPropertyDescriptor(myObject, "name"); //ottiene descrittore proprietà
+        Reflect.has(myObject, "name");
+        var myObject = { id: 123, name: "objName" };
+        console.log(Reflect.ownKeys(myObject)); //["id", "name"]
+        var myObject = {};
+        Reflect.defineProperty(myObject, "name", {
+            value: "objName",
+            writable: true,
+            configurable: true,
+            enumerable: true
+        });
+
+
+        var myObject = { name: "objName" };
+        console.log(Reflect.get(myObject, "name")); // objName ricava il valore della proprietà di un oggetto
+
+        var myObject = { name: "objName" };
+        Reflect.set(myObject, "name", "anotherName");
+        console.log(Reflect.get(myObject, "name")); //anotherName
+
+        var myObject = { name: "objName" };
+        console.log(Reflect.deleteProperty(myObject, "name")); //true
+
+        var myObject = { name: "objName" };
+        console.log(Reflect.getPrototypeOf(myObject)); //Object {}
+
+        var myObject = {
+            name: "objName"
+        };
+        var newObject = {
+            id: 123
+        };
+        if (Reflect.setPrototypeOf(newObject, myObject)) {
+            console.log(newObject.name); //objName
+        }
+        console.log(a);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

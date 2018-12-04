@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+      //Ajax ruota intorno all’oggetto XMLHttpRequest che rappresenta 
+      //l’intermediario tra il codice JavaScript eseguito sul browser e il codice eseguito sul server
+      var httpReq = new XMLHttpRequest();
+httpReq.onreadystatechange = function() {
+    //L’evento readystatechange si verifica ad ogni variazione del valore della proprietà readyState
+    //che rappresenta lo stato di avanzamento della richiesta
+    //Valore	Descrizione
+//0	Richiesta non inizializzata
+//1	Connessione al server stabilita
+//2	Ricezione degli header HTTP
+//3	Ricevimento della risposta
+//4	Operazione completata
+//status 200 significa non vi sono errori
+	/*if (httpReq.readyState == 4 && httpReq.status == 200) {
+		document.getElementById("myDiv").innerHTML = httpReq.responseText;
+    }*/
+    
+    if (httpReq.readyState == 4) {
+		switch(httpReq.status) {
+            case 200:
+            //Se il server invia una risposta in formato XML possiamo utilizzare la proprietà responseXML che restituisce la risposta come documento XML
+				document.getElementById("myDiv").innerHTML = httpReq.responseText;
+				break;
+			case 404:
+				alert("La pagina indicata non esiste!");
+				break;
+			case 500:
+				alert("Si è verificato un errore sul server!");
+				break;
+			default:
+				alert("Non è possibile elaborare la richiesta (" + httpReq.statusText + ")");
+		}
+	}
+};
+//metodo open:
+/*il verbo HTTP (GET nel nostro caso);
+l’URL della pagina o dello script server side richiesto;
+un valore booleano opzionale che indica se la richiesta deve essere effettuata in maniera asincrona (true) o sincrona (false).*/
+httpReq.open("GET", "/myServerPage", true);
+//inviamo la richiesta tramite il metodo send()
+httpReq.send();
+//se l’interazione con il server è sincrona, cioè il terzo parametro del metodo open() è false, 
+//non dobbiamo gestire readystatechange ma possiamo gestire la risposta del server subito dopo l’invocazione del metodo send():
+if (httpReq.status == 200) {
+	document.getElementById("myDiv").innerHTML = httpReq.responseText;
+}
+
+//esempio di recupero di un testo xml con l'oggetto xml
+httpReq.onreadystatechange = function() {
+	if (httpReq.readyState == 4) {
+		switch(httpReq.status) {
+			case 200:
+				var xmlDoc = httpReq.responseXML;
+				document.getElementById("myDiv").innerHTML = xmlDoc.getElementByTagName("testo")[0].childNodes[0].nodeValue;
+				break;
+			
+		}
+	}
+};
+
+
+//PROPRIETA' RESPONSETYPE:
+//ci dice che tipo di risposta otteniamo:
+/*Campo	Descrizione
+text	La risposta è in formato testuale
+document	La risposta è un documento XML o HTML
+json	La risposta è un oggetto JSON risultante dal parsing di una stringa inviata dal server
+arraybuffer	La risposta è un un buffer di dati binary rappresentati come ArrayBuffer
+blob	La risposta è un oggetto Blob, assimilabile ad un file*/
+
+httpReq.onreadystatechange = function() {
+	if (httpReq.readyState == 4) {
+		switch(httpReq.status) {
+			case 200:
+				switch(httpReq.responseType) {
+					case "text":
+						elaboraTesto(httpReq.response);
+						break;
+					case "document":
+						elaboraDocumento(httpReq.response);
+						break;
+						
+				}
+				break;
+				
+		}
+	}
+};
+//*****************************
+//gestione degli header http
+//In generale, per l’impostazione di un header abbiamo a disposizione il metodo setRequestHeader() 
+//che prevede due parametri: il nome dell’header e il suo valore
+//Il seguente esempio mostra come impostare l’header Accept per indicare al server in quali formati si preferisce ricevere la risposta
+httpReq.setRequestHeader("Accept", "application/json, text/html, text/*");
+httpReq.open("GET", "/myServerPage", true);
+httpReq.send();
+//Analogamente è possibile analizzare gli header HTTP inviati dal server con la risposta tramite i metodi getAllResponseHeaders() e getResponseHeader()
+var dimensioni = httpReq.getResponseHeader("Content-Length");
+
+    </script>
+</head>
+<body>
+<div id="myDiv"></div>
+</body>
+</html>

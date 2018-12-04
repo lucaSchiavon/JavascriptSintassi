@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .overClass {font-weight: bold;   color: red;}
+        .outClass  {font-weight: normal; color: black;}
+        </style>
+</head>
+<body>
+    <!--Per consentire il trascinamento di un elemento, l’elemento source, è necessario innanzitutto renderlo draggable-->
+    <img id="miaImmagine" src="https://feed.4wnet.com/image.ashx?u=http%3a%2f%2fcdn.images.feed.4wnet.com%2fsnrmmpB7.jpg" draggable="true"/>
+    
+    <div id="divTarget"  style="top:300px;width:600px;height:600px;border-style: solid">
+        
+    </div>
+</body>
+<script>
+    //L’evento dragstart indica il verificarsi di un’azione di trascinamento. 
+    //In corrispondenza di questo evento possiamo definire quale informazione associare al trascinamento
+    var img = document.getElementById("miaImmagine");
+    img.ondragstart = function(e) 
+    {
+        e.dataTransfer.setData("text", e.target.id); //è stato creato il data payload ossia i dati che intendiamo spostare
+    //Questo metodo prevede due parametri: il primo indica il tipo di dato mentre il secondo indica l’informazione vera e propria
+    }
+    //assegnando un gestore all’evento dragover, come mostrato nel seguente esempio
+    var divTarget = document.getElementById("divTarget");
+    divTarget.ondragover = function(e) 
+    {
+        e.target.className = "overClass";
+        e.preventDefault();
+    }
+    //Infine gestiamo l’ultima fase dell’operazione gestendo l’evento drop
+    divTarget.ondrop = function(e) {
+    var data = e.dataTransfer.getData("text");
+    
+    e.target.appendChild(document.getElementById(data));
+    
+    /*var img = document.createElement("img");
+    var srcAttr = document.createAttribute("src");
+    srcAttr.value = "https://feed.4wnet.com/image.ashx?u=http%3a%2f%2fcdn.images.feed.4wnet.com%2fsnrmmpB7.jpg";
+    img.setAttributeNode(srcAttr);
+    e.target.appendChild(img);*/
+        }
+    </script>
+ 
+</html>

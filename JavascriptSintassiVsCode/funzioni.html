@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+      //definizione funzione
+        function somma(x, y) {
+            var z = x + y;
+            return z;
+        }
+debugger;
+        //invocazione
+        var risultato = somma(11, 5);
+        var risultato1 = somma(11);
+        var risultato2 = somma();
+        var risultato3 = somma(11, 5, 7, 9);
+
+        //uso di arguments array, una sorta di paramarray
+        function somma() {
+            var z = 0;
+            var i;
+            for (i in arguments) {
+                z = z + arguments[i];
+            }
+            return z;
+        }
+      var a=  somma(2, 78);
+        var b = somma(17, 32, 4, 19, 52);
+        var c = somma(17, 32, 4);
+
+        //valori default parametri ecma6
+        function somma(x = 0, y = 0) {
+            var z = x + y;
+            return z;
+        }
+        //rest parameter ecma6 (y preceduta da tre puntini) simile a argiuments ma cattura solo elementi in più non specificati e non tutti
+      function eseguiOperazione(x, ...y) {
+            var z = 0;
+            switch (x) {
+                case "somma":
+                    for (i in y) {
+                        z = z + y[i];
+                    }
+                    break;
+                case "moltiplica":
+                    for (i in y) {
+                        z = z * y[i];
+                    }
+                    break;
+                case "dividi":
+                    z = y[0] / y[1];
+                    break;
+                default:
+                    z = NaN;
+                    break;
+            }
+            return z;
+        }
+
+
+        eseguiOperazione("somma", 12, 54, 2, 7, 12);
+        eseguiOperazione("moltiplica", 4, 11, 32);
+        eseguiOperazione("dividi", 45, 9, 6, 17);
+
+        //spread operator ecma6
+        var addendi = [8, 23, 19, 72, 3, 39];
+        somma(...addendi);
+        //equivale a queto:
+        somma(8, 23, 19, 72, 3, 39);
+       
+
+        //una funzione è un oggetto con oggetto base function
+
+        //assegnazione funzione anonima o lambda a variabile
+        var somma = function (x, y) {
+            return x + y;
+        };
+        //assegnazione risultato funzione con nome a variabile
+        var z = somma(4, 8);
+        console.log(z);	// 12
+
+        //invocazione funzione con nome
+        var z = somma(4, 8);
+        console.log(z);	// 12
+
+        //definizione ed invocazione funzione anonima
+        //Facciamo notare che l’intera espressione è racchiusa tra parentesi tonde. Questo è necessario perchè altrimenti il parser JavaScript, 
+        //trovando la parola chiave function, tenterebbe di interpretare l’espressione come una definizione di funzione nel contesto globale
+        //Questo tipo di espressione è in genere chiamata immediately-invoked function expression
+        debugger;
+        (function (x, y) {
+            return x + y;
+        }(4, 8));
+
+
+        //essendo un oggetto ha delle proprietà
+        var somma = function Sum(x, y) {
+            return x + y;
+        };
+        console.log(somma.name);	// stampa "Sum"
+        console.log(somma.length);	// stampa 2 :numero argomenti
+
+        //callback è una funzione passata come parametro
+        function calcola(func, arg1, arg2) {
+            return func(arg1, arg2);
+        }
+debugger;
+//chiama callback
+        console.log(calcola(somma, 13, 25));	// 38
+
+        //Un aspetto a cui prestare attenzione quando scriviamo funzioni che accettano callback 
+        //è quello di accertarsi che venga passata effettivamente una funzione prima di invocarla.Il 
+        //seguente esempio mostra come effettuare tale verifica
+
+        function calcola(func, arg1, arg2) {
+            //qui si valuta che fun non sia null ossia che l'arg sia stato passato e che sia di tipo funzione
+            if (func && typeof func === "function") {
+                return func(arg1, arg2);
+            }
+        }
+
+        //esempio pratico di callback con funzione lamdba (anonima)
+        var numeri = [11, 3, 24];
+        numeri.forEach(function (valore, indice) {
+            console.log(valore);
+        });
+
+        //esempio pratico di callback con funzione
+        function mostraValore(valore, indice) {
+            console.log(valore);
+        }
+        var numeri = [11, 3, 24];
+        numeri.forEach(mostraValore);
+
+        //altro esempio partico di callback per definire il criterio di ordinamento degli oggetti person dell'array:
+        var persone = [{ nome: "Mario", cognome: "Rossi", professione: "impiegato" },
+        { nome: "Giuseppe", cognome: "Verdi", professione: "operaio" },
+        { nome: "Marco", cognome: "Neri", professione: "insegnante" },];
+        persone.sort(function (a, b) {
+            //restituire il valore 1 se il primo parametro viene prima del secondo nell’ordinamento
+            if (a.cognome < b.cognome) return -1;
+            if (a.cognome > b.cognome) return 1;
+            return 0;
+        });
+
+        //FUNZIONI CHE RESTITUISCONO FUNZIONI
+        //assegniamo la definizione di funzione anonima ad una variabile che rappresenta quindi non raccoglie quindi il valore di ritorno del risultato della funzione
+        //ma la definizione stessa dell'oggetto funzione
+        var incrementatore = function (incremento) {
+            return function (valore) {
+                return incremento + valore;
+            };
+        };
+        //quindi chiamiamo la funzione che a sua volta però restituisce una funzione!! e non il valore stesso infatti se faccio questo ottengo un errore:
+        //perchè sto cercando di leggere il valore di ritorno di una funzione che non rappresenta il valore di ritorno letterale ma un'altra funzione...
+        console.log(incrementatore(5));
+        //qui  contiene l'assegnazione della funzione di ritorno ossia la funzione interna percui
+        //è possibile successivamente chiamarla
+        var incrementaDiCinque = incrementatore(5);
+        console.log(incrementaDiCinque(4));  // 9
+        console.log(incrementaDiCinque(16)); // 21
+
+        //uso di this
+        var persona = {
+            nome: "Mario",
+            cognome: "Rossi",
+            nomeCognome: function () {
+                return this.nome + " " + this.cognome;
+            }
+        };
+        // saluta() prende come parametro una funzione (nomepersona)
+        // e la esegue nel proprio contesto di esecuzione.
+        //Dal momento che nomeCognome() è invocato al di fuori del suo contesto di esecuzione, 
+        //this non rappresenta più l’oggetto persona ma l’oggetto globale, nel quale non è presente 
+        //alcuna definizione di variabili nome e cognome
+        function saluta(nomePersona) {
+            console.log("Buongiorno " + nomePersona()); //otterremo undefined undefined perchè qui this rappresenta l'oggetto globale
+        }
+        //usiamo come parametro il metodo persona.nomeCognome
+        saluta(persona.nomeCognome);
+
+        //come facciamo ad ottenere il nome persona allora? usiamo il metodo call o apply
+        function saluta2(nomePersona) {
+            console.log("Buongiorno " + nomePersona.call(persona)); //call vuole come primo argomento l'oggetto di contesto ossia chi è this ed inseguito i parametri che vuoole la funzione
+            //fun.apply(thisArg, [argsArray])   apply è simile ma anziche prendere arguments come argomenti prende l'oggetto this e un array di parametri
+        }
+        saluta2(persona.nomeCognome);
+
+        //altra alternativa con bind:
+        function saluta(nomePersona) {
+            console.log("Buongiorno " + nomePersona());
+        }
+        saluta(persona.nomeCognome.bind(persona));//non interveniamo sul codice della funzione ma passiamo una versione del metodo nomecognome impostato su persona
+
+
+        //esempio con DOM:
+        var persona2 = {
+            nome: "Mario",
+            cognome: "Rossi",
+            saluta: function () {
+                alert("Buongiorno " + this.nome + " " + this.cognome);
+            }
+        };
+       // document.getElementById("pulsante").addEventListener("click", persona2.saluta); //qui this sarà il bottone e non la persona quindi otterremo undefined
+
+        //CLOSURE E SCOPE
+
+        //scope:
+        //Un aspetto nuovo evidenziato dal codice è il fatto che la funzione visualizzaSaluto(), 
+        //definita all’interno della funzione saluta(), possa accedere ad una variabile locale di quest’ultima, nello specifico nomeCognome
+        //Non si ha più, quindi, una semplice distinzione tra scope locale e globale, ma è possibile avere una vera e propria gerarchia di scope o scope chain
+        //Una funzione, infatti, può accedere allo scope locale, allo scope globale ed allo scope accessibile dalla funzione in cui è stata definita (funzione esterna)
+        //il quale può essere a sua volta il risultato della combinazione del proprio scope locale con lo scope della sua funzione esterna e così via definendo lo scope chain
+      /*  var saluto = "Buongiorno";
+        function saluta(persona) {
+            var nomeCognome = persona.nome + " " + persona.cognome; 
+            function visualizzaSaluto() {
+                console.log(saluto + " " + nomeCognome);//Qui lo scopo non è più
+            }
+            visualizzaSaluto();
+        }
+        saluta({ nome: "Mario", cognome: "Rossi" });*/
+
+        //quando la funzione restituita viene invocata, la funzione saluta() (la sua funzione esterna) 
+        //ha terminato la sua esecuzione e quindi il suo contesto di esecuzione non esiste più
+        //Nonostante ciò è ancora possibile accedere alla variabile nomeCognome presente nel suo scope locale!
+        var salutoC= "Buongiorno";
+        var visualizzaSalutoC;
+        function salutaC(persona) {
+            var nomeCognome = persona.nome + " " + persona.cognome;
+            return function () {
+                console.log(salutoC + " " + nomeCognome);
+            };
+        }
+        visualizzaSalutoC = salutaC({ nome: "Mario", cognome: "Rossi" });
+        visualizzaSalutoC();
+
+        //Closure:
+        //ogni variabile che era accessibile quando una funzione è stata definita rimane 
+        //"racchiusa" nello scope accessibile dalla funzione.Questo meccanismo è detto closure
+        console.log("CLOSURE");
+        var salutoA = "Buongiorno";
+        var visualizzaSalutiA;
+        function salutaA(persone) {
+            var nomeCognome;
+            var saluti = [];
+            for (var i in persone) {
+                nomeCognome = persone[i].nome + " " + persone[i].cognome;
+                saluti.push(function () {
+                    console.log(salutoA + " " + nomeCognome);
+                });
+            }
+            return saluti; //il valore di questa variabile nel momento in cui viene restituito l’array di funzioni è proprio la concatenazione del nome e cognome 
+        }
+        visualizzaSalutiA = salutaA([{ nome: "Mario", cognome: "Rossi" },
+        { nome: "Marco", cognome: "Neri" }]);
+        for (var i in visualizzaSalutiA) {
+            console.log(visualizzaSalutiA[i]());
+        }
+
+        //soluzione al problema sta nel fissare il vaore corrente di nome e cognome passandolo ad una funzione che contiene la funzione passata a push
+        var saluto = "Buongiorno";
+        var visualizzaSaluti;
+        function saluta(persone) {
+            var nomeCognome;
+            var saluti = [];
+            for (var i in persone) {
+                nomeCognome = persone[i].nome + " " + persone[i].cognome;
+                // immediately-invoked function expression... la soluzione
+                saluti.push((function (nc) {
+                    return function () {
+                        console.log(saluto + " " + nc);
+                    };
+                })(nomeCognome));
+            }
+            return saluti;
+        }
+        visualizzaSaluti = saluta([{ nome: "Mario", cognome: "Rossi" },
+        { nome: "Marco", cognome: "Neri" }]);
+        for (var i in visualizzaSaluti) { visualizzaSaluti[i](); }
+
+        //Arrow function:
+        var somma = function (x, y) {
+            return x + y;
+        };
+    /*    var somma = (x, y) => x + y; //definizione ai minimi termini: non esiste la parola function, non vengono utilizzate le graffe e non viene utilizzata return
+        //l'invocazione è la stessa di una funzione definita classicamente
+        var totale = somma(3, 2);
+        //varianti arrow function
+        (x, y) => { return x + y; }
+       // Se il corpo è costituito dalla sola istruzione return che restituisce una espressione, possiamo omettere la parola chiave return:
+        (x, y) => x + y;
+        //Se la funzione prevede un solo parametro, possiamo omettere le parentesi tonde
+        x => x * 2;
+        //Se la funzione non prevede alcun parametro, è obbligatorio l’uso delle parentesi tonde
+        () => "Hello world!"
+        //le arrow function si prestano molto ad essere usate nelle callback:
+
+        var numeri = [18, 13, 24];
+        numeri.forEach(function (valore) {
+            console.log(valore);
+        });
+
+        var numeri = [18, 13, 24];
+        numeri.forEach(valore => console.log(valore));
+        */
+
+        //differenza semantica nell'uso di arrowfunction o callbackfunction
+        var numeri = {
+            x: 12,
+            y: 3,
+            calcola: function (operazione) {
+                var fn;
+              
+                switch (operazione) {
+                    case '+':
+                        fn = function () { return this.x + this.y };
+                        break;
+                    case '-':
+                        fn = function () { return this.x - this.y };
+                        break;
+                    default:
+                        fn = function () { };
+                }
+                return fn();
+            }
+        }
+      console.log(numeri.calcola('+')); //qui risultato nan perchè this e fuori dallo scope di numeri
+        //soluzione1 usare bind:
+        console.log("PROVA")
+        //saluta(persona.nomeCognome.bind(persona));
+        try {
+           // numeri.calcola.bind(numeri, '+');
+            console.log(numeri.calcola.call(numeri,'+'));
+          
+        }
+        catch (error)
+        {
+            console.log(error);
+        }
+        //soluzione2 definire una variabile all'interno dello scope di calcola ed assegnargli this
+        var numeri = {
+            x: 12,
+            y: 3,
+            calcola: function (operazione) {
+                var fn;
+                var scopo = this;
+                switch (operazione) {
+                    case '+':
+                        fn = function () { return scopo.x + scopo.y };
+                        break;
+                    case '-':
+                        fn = function () { return scopo.x - scopo.y };
+                        break;
+                    default:
+                        fn = function () { };
+                }
+                return fn();
+            }
+        }
+        console.log(numeri.calcola('+'));
+        //soluzione 3 usare le arrowfunction
+        /*
+        var numeri = {
+            x: 12,
+            y: 3,
+            calcola: function (operazione) {
+                var fn;
+                switch (operazione) {
+                    case '+':
+                        fn = () => this.x + this.y; //this rappresenterà il contesto al momento della definizione delle funzioni
+                        break;
+                    case '-':
+                        fn = () => this.x - this.y
+                        break;
+                    default:
+                        fn = () => { };
+                }
+                return fn();
+            }
+        }
+        numeri.calcola('+');
+        */
+        var a = "ciccio";
+    </script>
+</head>
+<body>
+
+</body>
+</html>

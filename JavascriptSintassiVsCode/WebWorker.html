@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+<div id="msgDisplay"></div>
+
+
+   
+       
+</body>
+<script>
+        //thread principale....
+
+     //i Web Worker. Un Web Worker è un thread eseguito parallelamente all’esecuzione del thread principale del JavaScript engine
+     var myWorker = new Worker("worker.js");
+     //dal thread principale al worker
+        myWorker.postMessage("start");
+
+        myWorker.addEventListener("message", function(event) {
+	msgDisplay.innerHTML = event.data;
+});
+//per getire eventuali errori del worker
+myWorker.addEventListener("error", function(error) {
+	console.log("Si è verificato l'errore '" + error.message +
+	            "' durante l'esecuzione del worker " + error.filename +
+				" in corrispondenza della linea " + error.lineno);
+});
+myWorker.terminate();
+
+//esistono anche gli sharedworker variante dei webworker:
+//Possono, ad esempio, essere impiegati in quelle situazioni 
+//in cui si ha necessità di condividere una determinata elaborazione o per mantenere uno stato condiviso tra pagine Web diverse
+    </script>
+</html>

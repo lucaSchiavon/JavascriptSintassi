@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+      var handler = {
+    get(target, propertyName) {
+       console.log("Lettura di " + propertyName);
+       return target[propertyName];
+    },
+    set(target, propertyName, value) {
+       console.log("Assegnamento di " + value + " a " + propertyName);
+       target[propertyName] = value;
+    }
+ };
+debugger;
+ var persona = {nome: "Mario", cognome: "Rossi"};
+var personaProxata = new Proxy(persona, handler);
+
+var nome = personaProxata.nome;
+ //console: Lettura di nome
+ personaProxata.nome = "Marco";
+ //console: Assegnamento di Marco a nome
+ console.log(persona.nome);
+ //console: Marco
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

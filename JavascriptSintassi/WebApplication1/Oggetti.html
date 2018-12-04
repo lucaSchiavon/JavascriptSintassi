@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+    //definizione oggetto da rappresentazione letterale:
+        var oggettoVuoto = {};
+        var persona = { "nome": "Mario", "cognome": "Rossi" };
+        /* I doppi apici intorno al nome della proprietà sono opzionali, 
+        ma diventano obbligatori quando il nome non segue le regole per nomi delle variabili.
+        Quindi, avremmo potuto scrivere la nostra definizione di persona nel seguente modo:*/
+        var persona = { nome: "Mario", cognome: "Rossi" };
+        var persona = { "primo-nome": "Mario", "secondo.nome": "Rossi" };
+        //una proprietà puo assumenre qualsiasi valore
+        var persona = {
+            nome: "Mario",
+            cognome: "Rossi",
+            indirizzo: {
+                via: "Via Garibaldi",
+                numero: 15,
+                CAP: "00100",
+                citta: "Roma"
+            }
+        };
+
+        //accedere ad una proprietà:
+        //dot notation:
+        var nome = persona.nome;
+        //oppure:
+        var nome = persona["nome"];
+        //Questo approccio è obbligatorio quando il nome della proprietà non segue le regole per i nomi delle variabili.
+
+        //Se proviamo ad assegnare un valore ad una proprietà non definita creiamo di fatto questa proprietà inizializzandola con il valore assegnato
+        persona.eta = 32;
+        //Metodi due modi:
+        function visualizzaNomeCognome() { return this.nome + " " + this.cognome; }
+       
+        persona.nomeCognome = visualizzaNomeCognome;
+        //questo con assegnazione diretta funzione anonima
+        persona.nomeCognome = function () { return "Mario Rossi"; }
+        //poi per leggerlo così:
+        var nomeCognome = persona.nomeCognome();
+
+
+        //altro modo di creare un oggetto:
+        var persona = new Object();
+        persona.nome = "Mario";
+        persona.cognome = "Rossi";
+
+        //il risultato ottenuto qui non è un semplice oggetto ma oggetti specializzati
+        var numero = new Object(12);
+       
+        var altroNumero = new Object(3 * 2);
+        var stringa = new Object("test");
+        var persona = new Object({ nome: "Mario", cognome: "Rossi" });
+
+        //metodi comuni a tutti gli oggetti:
+        var x = new Object(32);
+        x.toString();            //restituisce "32"
+        var persona = new Object({ nome: "Mario", cognome: "Rossi" });
+        persona.toString();		//restituisce "[object Object]"
+
+        var x = new Object(32);
+        x.valueOf();             //restituisce 32
+        var persona = new Object({ nome: "Mario", cognome: "Rossi" });
+        console.log(persona.valueOf());		//restituisce "[object Object]"
+        var a = persona.valueOf();
+
+        //oggetto number
+        var x = new Number(123);
+        var y = new Number(3.14);
+
+        //metodi di oggetto number... esistono anche analoghe funzioni globali
+        var a = Number.isFinite(345);
+        var a = Number.isInteger(345);
+        var a = Number.isNaN(345);
+
+        var x = new Object(123.4);
+        var y = x.toFixed();
+        var z = x.toFixed(2);
+
+        var x = new Number(123.4);
+        x.toPrecision();	//"123.4"
+        x.toPrecision(1);	//"1e+2"
+        x.toPrecision(2);	//"1.2e+2"
+        x.toPrecision(3);	//"123"
+        x.toPrecision(4);	//"123.4"
+        x.toPrecision(5);	//"123.40"
+        x.toPrecision(6);	//"123.400"
+
+        //oggetto string
+        var x = new String("Una nuova stringa");
+        var x = new String("Una nuova stringa");
+        var y = x.length;		//17
+        var x = "Una nuova stringa".charAt(2); //a
+        var x = "Una nuova stringa"[2];
+        var x = "Una nuova stringa".replace("s", "S"); //sostituisce solo prima occorrenza
+        var x = "Una nuova stringa".indexOf("nuova"); //restituisce prima occorrenza
+        var x = "Una nuova stringa".lastIndexOf("n"); //restituisce ultima occorrenza
+        var x = "Una nuova stringa".substr(4, 5); //estrae i 5caratteri dalla 4a posizione
+        var x = "Una nuova stringa".substring(4, 9); //estrae da4a pos a 9a pos, se il secondo arg viene omesso estrae fino in fondo
+
+        //differenza subtring slice, substring scambia i valori se il secondo è minore del primo, slice no
+        var x = "Una nuova stringa".substring(4, -2);
+        var y = "Una nuova stringa".slice(4, -2);
+
+        var x = "Una nuova stringa".split();
+//x == ["Una nuova stringa"]
+        var x = "Una nuova stringa".split("");
+//x == ["U", "n", "a", " ", "n", "u", "o", "v", "a", " ", "s", "t", "r", "i", "n", "g", "a"]
+        var x = "Una nuova stringa".split("", 5);
+//x == ["U", "n", "a", " ", "n"]
+        var x = "Una nuova stringa".toLowerCase();
+        var y = "Una nuova stringa".toUpperCase();
+//x == "una nuova stringa"
+//y == "UNA NUOVA STRINGA"
+        var x = " Una nuova stringa ".trim();
+        //x == "Una nuova stringa"
+        var y = "Una nuova stringa".startsWith("Una");  //true
+        var z = "Una nuova stringa".endsWith(".");	    //false
+
+        //ecma6... metodi che generano codice html
+       /* var x = "Una nuova stringa".anchor("test");
+        var y = "Una nuova stringa".italics();
+        var z = "Una nuova stringa".bold();
+        //x == "<a name='test'>Una nuova stringa</a>"
+        //y == "<i>Una nuova stringa</i>"
+        //z == "<b>Una nuova stringa</b>" */
+
+
+        //template string ecma6 con backtick (alt+96 per scriverlo)
+        //var messaggio = `Attenzione!\nIl valore inserito ${valore} non è valido perché esso deve essere compreso tra ${valoreIniziale} e ${valoreFinale}.\nSi prega di riprovare.`;
+        //var somma = `La somma di ${a} e ${b} è ${a + b}`;
+        //equivalente all'istruzione tradizionale:
+        var messaggio = "Attenzione!\nIl valore inserito " + valore + " non è valido perché esso deve essere compreso tra " + valoreIniziale + " e " + valoreFinale + ".\nSi prega di riprovare.";
+
+
+        console.log(a);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

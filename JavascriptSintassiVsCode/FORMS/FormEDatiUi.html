@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+       window.addEventListener('load',inizializza)
+       function inizializza()
+       {
+           debugger;
+        //***********************
+        //FORM
+        //Durante la generazione del DOM 
+        //viene popolato un array contenente l’elenco degli oggetti 
+        //che rappresentano i form presenti nella pagina. Questo array 
+        //è accessibile tramite la proprietà forms dell’oggetto document
+
+        //quanti form presenti nella pagina:
+        console.log(document.forms.length);
+        //accede a form specifico , poco sicuro perchè dipende dalla posizione form nella pagina
+        var myForm = document.forms[0];
+        //L’approccio migliore è quello di assegnare al form un identificatore tramite l’attributo id
+        var myForm = document.getElementById("myForm");
+        //se usiamo attributo name possiamo accedere al form così:
+        //Il nome assegnato al form aggiunge di fatto una proprietà all’array forms con lo stesso nome del valore dell’attributo name
+        var myForm = document.forms.myForm2;
+        //************************************
+        //ACCESSO AI CONTROLLI DI UN FORM
+        //accesso ai controlli:
+        var primoControllo = document.forms.myForm[0];
+        var primoControllo = document.forms.myForm.elements[0];
+        //Anche per i controlli è possibile sfruttare l’attributo name 
+        //ed accedere direttamente ad essi come abbiamo visto per le form:
+        var myform=document.forms.myForm;
+        var txtNome=myform.txtNome;
+        //**************************************
+        //ACCESSO AI VALORI DEI CONTROLLI
+        //La proprietà value di qualsiasi controllo contiene 
+        //il suo valore corrente indipendentemente dallo specifico tipo di controllo
+        //CASELLA DI TESTO
+        var nome = txtNome.value;
+        //recupero dropdown della sigla provincia
+        //DROPDOWN A SELEZIONE SINGOLA
+
+        //var selectedProvincia = document.forms.MyForm.selProvincia.value;
+
+        //Se vogliamo accedere al valore testuale della voce selezionata dobbiamo adottare un approccio diverso
+        var selIndex = myform.selProvincia.selectedIndex;
+        var selItem;
+        //in caso di nessuna selezione il valore è -1
+        if (selIndex > -1) {
+            //recupera l'elemento option
+            selItem = myform.selProvincia.options[selIndex];
+            console.log(selItem.text);
+        }
+        //DROPDOWN A SELEZIONE MULTIPLA
+        var options = myform.selProvince.options;
+        var selectedOptions = [];
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].selected) selectedOptions.push(options[i].value);
+        }
+        //RADIO BUTTON
+        //Il raggruppamento di valori è determinato dal nome associato ai radio button
+        //restituisce array:
+        var sesso=myform.sesso;
+        //valore stringa di ritorno che risponde a value selezionato
+        var sesso = myform.sesso.value;
+       }
+
+    </script>
+</head>
+<body>
+        <form id="myForm">
+                <p><label>Nome:    <input type="text" name="txtNome" value="contenuti casella"/></label></p>
+                <p><label>Cognome: <input type="text" name="txtCognome"/></label></p>
+                <select name="selProvincia">
+                        <option value="RM">Roma</option>
+                        <option value="NA">Napoli</option>
+                        <option value="TO">Torino</option>
+                        <option value="MI">Milano</option>
+                    </select>
+                    <select name="selProvince" multiple="multiple">
+                            <option value="RM">Roma</option>
+                            <option selected value="NA">Napoli</option>
+                            <option selected value="TO">Torino</option>
+                            <option value="MI">Milano</option>
+                        </select>
+                        <label><input type="radio" checked name="sesso" value="M"/>Maschio</label>
+                        <label><input type="radio" name="sesso" value="F"/>Femmina</label>
+        </form>
+            <form name="myForm2">
+                    <!-- ... -->
+                    </form>
+</body>
+</html>

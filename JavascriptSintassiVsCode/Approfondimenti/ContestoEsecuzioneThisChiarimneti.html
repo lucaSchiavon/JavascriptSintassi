@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var numeri = [18, 13, 24];
+
+        function FunCalb(val) {
+            console.log(val);
+        }
+        numeri.forEach(FunCalb);
+
+
+
+        numeri.forEach(function (valore) {
+            console.log(valore);
+        });
+        console.log("-----------");
+        //implicazioni semantiche arrow function
+        var numeri = {
+            x: 12,
+            y: 3,
+            leggiPropr: function () {
+                return this.x + " " + this.y; 
+            },
+            calcola: function (operazione) {
+                var fn;
+                
+                switch (operazione) {
+                    case '+':
+                        fn = function () { return this.x + this.y };
+                        break;
+                    case '-':
+                        fn = function () { return this.x - this.y };
+                        break;
+                    default:
+                        fn = function () { };
+                }
+                return fn();
+            }
+        }
+       var x= numeri.leggiPropr(); //qui i valori di x ed y sono raggiungibili in quanto si avrà accesso allo s
+        var f = numeri.calcola('+'); //qui non più in quanto la funzione anonima è dentro la funzione calcola che è dentro lo scope di numeri
+        //******************
+        //soluzione1:
+        var numeri2 = {
+            x: 12,
+            y: 3, 
+            calcola: function (operazione) {
+                var fn;
+                var scopo = this; //espongo lo scopo di numeri2 a livello di function calcola
+                switch (operazione) {
+                    case '+':
+                        fn = function () { return scopo.x + scopo.y }; //affinchè possano essere recuperate qui x e y
+                        break;
+                    case '-':
+                        fn = function () { return scopo.x - scopo.y };
+                        break;
+                    default:
+                        fn = function () { };
+                }
+                return fn();
+            }
+        }
+        console.log("soluzione 2");
+        var f = numeri2.calcola('+');
+        //soluzione 3 uso di call
+        var numeri3 = {
+            x: 12,
+            y: 3, 
+            calcola: function (operazione) {
+                var fn;
+                var scopo = this;
+                switch (operazione) {
+                    case '+':
+                        fn = function () { return scopo.x + scopo.y }; //affinchè possano essere recuperate qui x e y
+                        break;
+                    case '-':
+                        fn = function () { return scopo.x - scopo.y };
+                        break;
+                    default:
+                        fn = function () { };
+                }
+                return fn.call(scopo);
+            }
+        }
+        console.log("soluzione 3");
+        var f = numeri3.calcola('+');
+       
+       
+        console.log("Stop");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

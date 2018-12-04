@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    
+    <div id="mainDiv"><h1>Titolo</h1><p>Un paragrafo</p><p>Un altro paragrafo</p></div>
+</body>
+<script> 
+debugger;
+var mainDiv = document.getElementById("mainDiv");
+var img = document.createElement("img");
+var srcAttr = document.createAttribute("src");
+srcAttr.value = "default.png";
+img.setAttributeNode(srcAttr);
+mainDiv.appendChild(img);
+
+document.body.insertBefore(img, mainDiv);
+//un ipotetico insert after che non esiste
+document.body.insertBefore(img, mainDiv.nextSibling);
+
+mainDiv.replaceChild(img, mainDiv.firstChild());
+
+//rimozione elementi ed attributi
+mainDiv.removeChild(mainDiv.firstChild());
+mainDiv.removeAttribute("class");
+mainDiv.remove();
+
+    </script>
+</html>

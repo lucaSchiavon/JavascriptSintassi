@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+         window.addEventListener('load',inizializza);
+         var x = 100;
+        var y = 100;
+        function inizializza()
+        {
+            var myCanvas = document.getElementById("myCanvas");
+            var context = myCanvas.getContext("2d"); 
+            function drawCircle(x, y) {
+   
+                context.beginPath();
+                context.arc(x, y, 50, 0, 2 * Math.PI);
+                context.fillStyle = "#00ff00";
+                context.fill();
+                context.strokeStyle = "#000000";
+                context.stroke();
+            }
+
+            function animate() {
+            
+                x = x + 2;
+                if (x > myCanvas.width) x = 20;
+                //per ridisegnare occorre cancellare la figura per poi ridisegnarla con una coordinata
+                //leggermente differente
+                context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                drawCircle(x, y);
+            }
+
+            var timerId;
+            function startAnimation() {
+            
+                if( timerId == null) {
+                            timerId = setInterval(animate, 20);
+                }
+            }
+            startAnimation();
+           
+            //drawCircle(100,100);
+
+
+                    //inserire una immagine in un canvas
+                    var img = new Image();
+                        img.onload = function()  //È importante inserire l’immagine nel canvas dopo che questa sia stata effettivamente caricata nel DOM. Per questo motivo il metodo drawImage() viene invocato in corrispondenza dell’evento load
+                        {
+                            context.drawImage(img, 0, 0);
+                        };
+                        img.src = "immagine.jpg";
+              }
+       
+
+    </script>
+</head>
+<body>
+    
+  
+    <canvas id="myCanvas"></canvas>
+
+   
+       
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+    //L’oggetto principale per l’interazione con il browser è window: esso rappresenta una finestra che contiene un documento HTML
+    //rappresenta anche il contesto di esecuzione globale per JavaScript
+    //cioè l’oggetto all’interno del quale vengono definite variabili e funzioni globali
+    //Qualsiasi variabile o funzione definita nel contesto globale diventa di fatto proprietà o metodo dell’oggetto window
+    var x = 123;
+function somma(a, b) {
+	return a + b;
+}
+
+console.log(x);
+console.log(somma(3, 5));
+console.log(window.x);
+console.log(window.somma(3, 5));
+console.log(this.x);
+console.log(this.somma(3, 5));
+
+//dimensioni finestra
+console.log(innerWidth + "x" + innerHeight)	// 1280x386
+console.log(window.screen.availWidth + "x" + window.screen.availHeight);
+//dimensioni a tutto schermo escludendo taskbar
+console.log(window.screen.availWidth + "x" + window.screen.availHeight);
+
+/*
+//frame contenuti nella pagina: con  frame si crea gerarchia oggetti windows
+for (var i=0; i<frames.length; i++) {
+	console.log(frames[i].location.href)
+}
+
+window.alert("Questo è un messaggio");
+if (window.confirm("Confermi l'eliminazione?")) {
+	// ...
+}
+
+var nome = window.prompt("Inserisci il tuo nome");
+if (nome != null) {
+	// ...
+}
+*/
+//window.open("http://www.html.it", "_blank");
+//window.open("http://www.html.it", "myWindow", "menubar=no,toolbar=no,status=no, height=400,width=600,top=150,left=150");
+//Per chiudere una finestra, l’oggetto window mette a disposizione il metodo close().
+//window.close();
+
+//Il metodo setTimeout() crea un timer che eseguirà la funzione specificata come primo parametro dopo 5000 millisecondi
+//var myTimer = setTimeout(function() {console.log("test")}, 5000);
+//clearTimeout(myTimer);
+
+debugger;
+var x = 0;
+var myTimer2 = setInterval(function() { x++; console.log(x); }, 1000);
+
+var myTimer = setTimeout(function() {clearInterval(myTimer2);}, 5000);
+
+//oggetto history
+//la seguente istruzione carica la pagina precedentemente visitata dall’utente
+window.history.back();
+window.history.go(-3);
+//equivalenti
+window.history.back();
+window.history.go(-1);
+
+//oggetto location:
+//Per controllare l’URL del documento caricato nella finestra corrente utilizziamo la proprietà location
+console.log(window.location.href)
+console.log(window.location.protocol)
+console.log(window.location.hostname)
+console.log(window.location.host)
+console.log(window.location.origin)
+console.log(window.location.pathname)
+console.log(window.location.search)
+console.log(window.location.hash)
+//L’accesso alle proprietà dell’oggetto location non è però in sola lettura.
+//cambia pagina coprrente equivalenti:
+window.location.href = "http://www.html.it";
+//window.location.assign("http://www.html.it");
+//anche se non è necessario è possibile forzare il reload;
+window.location.reload(true);
+//come assign ma in più sostituisce anche nella history...
+window.location.replace("http://www.html.it");
+
+//oggetto NAVIGATOR:
+//Per ottenere informazioni sul browser corrente e su alcune sue impostazioni possiamo utilizzare la proprietà navigator
+//ma non sempre le informazioni sono così utili ed accurate
+console.log(navigator.appName);
+console.log(navigator.appVersion);
+//Un approccio molto utilizzato per identificare il browser corrente (meglio di quello di prima) è basato sull’analisi della user agent string
+//anche questa tecnica non è più affidabile però....
+function getBrowserName() {
+  var browserNames = ["Chrome", "Firefox", "MSIE", "Opera", "Safari"];
+  for(var i in browserNames) {
+  if (window.navigator.userAgent.indexOf(browserNames[i]) > -1) break
+  }
+  return browserNames[i];
+}
+
+onsole.log(getBrowserName());
+
+//approccio migliore feature detecting
+//consiste nell’assicurarsi direttamente se una caratteristica è supportata o meno, 
+//ad esempio verificando se l’oggetto o il metodo che implementa la funzionalità è diverso da undefined
+
+//L’uso dell’oggetto navigator può comunque risultare utile per stabilire se l’utilizzo dei cookie è abilitato, 
+//se il browser è online e qual è la lingua preferita dall’utente
+console.log(window.navigator.cookieEnabled);
+console.log(window.navigator.onLine);
+console.log(window.navigator.language);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

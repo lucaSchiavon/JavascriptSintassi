@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //creare oggetti con object.create
+        var persona = Object.create(null); //qui non ha nessun metodo e propr neanche quello dell'oggetto prototype
+        var persona = Object.create(Object.prototype);
+
+
+        function persona(nome, cognome) {
+            this.nome = (nome || "");
+            this.cognome = (cognome || "");
+        }//costruttore
+        //inizializzazione prototipo:
+        persona.prototype.indirizzo = "";
+        persona.prototype.email = "";
+        persona.prototype.mostraNomeCompleto = function () { return this.nome + " " + this.cognome };
+        persona.prototype.calcolaCodiceFiscale = function () { };
+
+
+        var marioRossi = Object.create(persona.prototype); //qui nome e cognome non vengono inizializzate poichè non abbiamo creato l'oggetto mediante costruttore
+
+        //ma se facciamo così:
+        var marioRossi = Object.create(
+            persona.prototype,
+            {
+                nome: { value: "Mario" },
+                cognome: { value: "Rossi" }
+            });
+        //il precedente codice offre la possibilità di inizializzare fornendo modalità di accesso alle proprietà:
+        var marioRossi = Object.create(
+            persona.prototype, {
+                nome: {
+                    value: "Mario",
+                    writable: false,//DATA DESCRIPTOR ....le prop qui non può ne essere modificata ne rimossa
+                    configurable: false
+                },
+                cognome: {
+                    value: "Rossi",
+                    writable: false,
+                    configurable: false
+                },
+                indirizzo: {
+                    value: "",
+                    writable: true,
+                    configurable: true
+                },
+                email: {
+                    value: "", writable: true, configurable: true
+                },
+                nomeCompleto: {
+                    configurable: true,
+                    get: function () { return this.nome + " " + this.cognome; } //ACCESSOR DESCRIPTOR definita proprietà in sola lettura
+                },
+                _email: { value: "", writable: true, configurable: true }, //esempio di pefinizione proprietà completa con DATA DESCRIPTOR ed ACCESSOR DESCRIPTOR
+                email: {
+                    get: function () {
+                        return this._email;
+                    },
+                    set: function (value) {
+                        var emailRegExp = /\w+@\w+\.\w{2,4}/i;
+                        if (emailRegExp.test(value)) {
+                            this._email = value;
+                        } else {
+                            console.log("Email non valida!");
+                        }
+                    }
+                }
+            });
+
+        function programmatore(nome, cognome) {
+            persona.call(this, nome, cognome);
+            this.linguaggiConosciuti = [];
+        }
+        programmatore.prototype = Object.create(persona.prototype); //creiamo il costruttore oggetto derivato
+
+
+        //differenze tra prototipi e classi
+        //un oggetto può esistere senza una classe
+        //l'ereditarietà è data da prototipi e non da classi percui un ogetto eredita le caratteristiche dell'altro adottando il suo prototipo
+        //un oggetto può essere arricchito successivamente a runtime cosa che con le classi non si può fare
+
+
+        //ecma6 approccio simile alle classi...:
+        //comunque è solo un mascheramento, il linguaggio rimane senza classi
+      /*  class persona { //qui è come se si fosse usata la parola function
+            constructor(nome, cognome) {
+                this.nome = nome;
+                this.cognome = cognome;
+                this.email = "";
+                this.indirizzo = "";
+            }
+            mostraNomeCompleto() {
+                return this.nome + " " + this.cognome;
+            }
+        }
+
+        //creazione nuovo oggetto
+        var marioRossi = new persona("Mario", "Rossi");
+
+
+        class persona {
+	constructor(nome, cognome) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this._email = "";
+		this.indirizzo = "";
+	}
+	mostraNomeCompleto() {
+		return this.nome + " " + this.cognome;
+	}
+	get email() { return this._email; }
+	set email(value) {
+		var emailRegExp = /\w+@\w+\.\w{2,4}/i;
+		if (emailRegExp.test(value)) {
+			this._email = value;
+		} else {
+			console.log("Email non valida!");
+		}
+	}
+}
+
+        class programmatore extends persona {
+	constructor(nome, cognome) {
+		super(nome, cognome);
+		this.linguaggiConosciuti = [];
+	}
+}
+        */
+
+        console.log(a);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

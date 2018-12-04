@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    <p id="mioParagrafo"><b>Questo &egrave; un paragrafo</b></p>
+    <p name="mioNomeParagrafo">Questo &egrave; un paragrafo</p>
+    <p class="classeMioParagrafo">Questo &egrave; un paragrafo</p>
+    <div class="messaggio"></div>
+    <div class="pippo"></div>
+    <img id="miaImmagine" src="http://www.like-agency.it/media/k2/items/cache/d6086de322f98f66cc694f32ea284557_L.jpg">
+    <input type="checkbox" id="chk1" value="car" name="veicle1" checked="true">
+    <div id="mainDiv"><h1>Titolo</h1><p>Un paragrafo</p><p>Un altro paragrafo</p></div>
+</body>
+<script>
+       //RECUPERO ELEMENTI O LISTE DI ELEMENTI DOM:
+        var p = document.getElementById("mioParagrafo");
+        var p = document.getElementsByName("mioNomeParagrafo");
+        var listaParagrafi = document.getElementsByTagName("p");
+        var listaParagrafi = document.getElementsByClassName("classeMioParagrafo");
+        //selezionando i selettori css
+        var divList = document.querySelectorAll("div.messaggio");
+        var p = document.querySelector("#mioParagrafo");
+        
+        //PROPRIETA'
+        //la proprietà innerHTML rappresenta il contenuto HTML di un elemento ed è accessibile sia in lettura che in scrittura
+        var p = document.getElementById("mioParagrafo");
+        console.log(p.innerHTML);
+            p.innerHTML = "Testo del paragrafo";
+           
+            //attributi:leggere imnpostare
+          var booleano=  p.hasAttribute("class");
+          booleano=  p.hasAttributes();
+          var valattributo=p.getAttribute("id");
+          p.setAttribute("prova","xxx");
+
+//assegna una immagine di default a tutti gli elementi img
+          var imgList = document.getElementsByTagName("img");
+for(var i=0; i < imgList.length; i++){
+	if (!imgList[i].hasAttribute("src"))
+		imgList[i].setAttribute("src", "default.png");
+}
+//poichè alcuni attributi sono già accessibili via javascript possiamo riscrivere in questo modo il codice precedente:
+var imgList = document.getElementsByTagName("img");
+for(var i=0; i < imgList.length; i++){
+	if (!imgList[i].src)
+		imgList[i].src = "default.png";
+}
+
+//poichè un elemento è a tutti gli effetti un oggetto possiamo assegnare ad esso nuove proprietà
+var img = document.getElementById("miaImmagine");
+img.miaProprieta = "nuovo valore";
+
+
+//gli attirbuti non sono case sensitive mentre le proprietà si:
+//istruzioni equivalenti
+img.getAttribute("src");
+img.getAttribute("SRC");
+
+//differenze tra proprietà ed attributi
+//gli attirbuti non sono case sensitive mentre le proprietà si
+//valore attributi solo stringa, proprietà no
+//altra distinzione l'attributo e la proprietà omonima non restituiscono sempre la stessa cosa es:
+
+var img = document.getElementById("miaImmagine");
+console.log(img.src);                   //"http://www.html.it/default.png"
+console.log(img.getAttribute("src"));   //"default.png"
+
+var chk=document.getElementById("chk1");
+console.log(chk.checked);
+console.log(chk.getAttribute("checked"));
+
+//regola generale:
+//********************************************************************************************************************************************
+//In linea di massima, quando è possibile, è sempre preferibile accedere alle proprietà dell’elemento invece che all’attributo corrispondente
+//i casi a cui accedere direttamente ad attributi sono:
+
+//quando non è prevista una corrispondente proprietà (ad esempio, in presenza di attributi custom);
+//quando vogliamo accedere ai valori originali di quegli elementi che prevedono un’interazione con l’utente.
+
+//NAVIGARE TRA NODI DEL DOM
+
+var div = document.getElementById("mainDiv");
+var lunghezza=div.childNodes.length-1
+for (var i=0;i<=lunghezza;i++)
+{
+  
+    if (typeof div.childNodes[i].innerHTML!=="undefined" )
+    {
+        
+            console.log(div.childNodes[i].innerHTML);
+        
+        
+    }
+
+}
+
+var primoNodoFiglio=div.firstChild;
+var ultimoNodoFiglio=div.lastChild;
+var nodoParente=ultimoNodoFiglio.parentNode;
+
+var prossimoFratello=primoNodoFiglio.nextSibling;
+var precedenteFratello=ultimoNodoFiglio.previousSibling;
+
+//recupera tutti i fratelli del nodo corrente:
+/*var me = document.getElementById("mainDiv");
+var allSiblings = me.parentNode.childNodes;
+var mySiblings = [];
+for (i = 0; i < allSiblings.length; i++) {
+	if (allSiblings[i] !== me) {
+		mySiblings.push(allSiblings[i]);
+	}
+}*/
+//stessa cosa sfruttando foreach di array
+debugger;
+var me = document.getElementById("mainDiv");
+var allSiblings = me.parentNode.childNodes;
+var mySiblings = [];
+/*allSiblings.forEach(function(el) {
+	if (el !== me) mySiblings.push(el);
+});*/
+[].forEach.call(allSiblings, function(el) {
+	if (el !== me) mySiblings.push(el);
+});
+for (var x=0;x<=allSiblings.length-1;x++)
+{
+    console.log(allSiblings[i].nodeName)
+}
+
+    </script>
+</html>

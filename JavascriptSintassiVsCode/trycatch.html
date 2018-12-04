@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //name definisce il tipo eccezione , message contiene il messaggio errore
+      try {
+            //Blocco di codice
+        } catch(e) {
+            
+            switch (e.name) {
+                
+                case "ReferenceError":
+                    console.log("Variabile o funzione non definita");
+                    break;
+                case "TypeError":
+                    console.log("Non è stato utilizzato il tipo di dato previsto");
+                    break;
+                
+            }
+}
+        function convalidaEmail(value) {
+            var emailRegExp = /\w+@\w+\.\w{2,4}/i;
+            if (emailRegExp.test(value)) {
+                return true;
+            } else {
+                throw new Error("Email non valida!"); //genera eccezione
+            }
+        }
+        console.log(a);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

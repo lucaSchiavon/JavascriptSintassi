@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+	 //Rispetto a XMLHttpRequest, fetch() ha una sintassi più semplice e meglio integrata nel modello ad oggetti di JavaScript
+	 //L’API prevede una gestione delle chiamate asincrone basata sulle promise
+
+	 //proprietà oggetto response:
+	/* status	È un valore intero che indica il codice di stato HTTP inviato dal server, per esempio 200 in caso di risposta con successo
+statusText	È una stringa associata al codice di stato, che ne descrive testualmente il significato. Ad esempio, se il codice di risposta è 200, la stringa sarà "OK"
+ok	È un valore booleano che indica se la risposta del server è stata positiva, cioè se il codice di stato restituito è compreso tra 200 e 299, estremi inclusi*/
+	
+fetch("http://www.html.it")
+   .then(response => {
+	   //se entriamo nel ramo then() del codice precedente non dobbiamo dare per scontato di aver ottenuto il 
+	   //contenuto richiesto al server. È buona norma verificare il codice di stato della risposta e gestirlo opportunamente
+	   if (response.ok) {
+       console.log("Contenuto ricevuto");
+    }
+    if (response.status >= 100 && response.status < 200) {
+       console.log("Informazioni per il client");
+    }
+    if (response.status >= 300 && response.status < 399) {
+       console.log("Redirezione");
+    }
+    if (response.status >= 400 && response.status < 499) {
+       console.log("Richiesta errata");
+	}
+	//anche la condizione d’errore sul server (codici di stato compresi tra 500 e 599) determina la risoluzione positiva della promise
+    if (response.status >= 500 && response.status < 599) {
+       console.log("Errore sul server");
+    }
+ })
+   .catch(error => console.log("Si è verificato un errore!")) //la promise viene rigettata quando vi è un problema intrinseco dic omunicazione come ad esempio nel caso in cui il server non risponde o non è disponibile una connessione Internet
+  
+ //esempio di restituzione di valori da fetch
+   fetch("http://www.html.it/api/articoli/123").then(response => {
+    if (response.ok) {
+	   return response.json();
+	/*   text()	Restituisce il contenuto sotto forma di testo
+json()	Effettua il parsing del contenuto e lo restituisce sotto forma di oggetto
+blob()	Restituisce il contenuto sotto forma di dati non strutturati (blob)
+arrayBuffer()	Restituisce il contenuto strutturato in un arrayBuffer */
+    }
+ }).then(articolo => console.log(articolo.titolo)).catch(error => console.log("Si è verificato un errore!")) //qui otteniamo l'oggetto deserializzato poichè ci aspettiamo un json
+ 
+ //L’esempio di richiesta HTTP che abbiamo presentato fin qui rappresenta la forma più semplice di utilizzo di fetch(). Non abbiamo specificato un verbo HTTP nè altri parametri
+//***************************************
+ //POST con fetch
+//una tecnica consiste nel creare l'oggetto http request e passarlo poi a fetch
+var richiesta = new Request("http://www.html.it/api/articoli", {
+    method: "post",
+    headers: new Headers({
+       "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({
+       titolo: "Un articolo",
+       autore: "Mario Rossi"
+    })
+ });
+ fetch(richiesta).then().catch()
+
+ //L’alternativa a questa soluzione consiste nel passare le medesime impostazioni dell’oggetto Request direttamente a fetch():
+
+fetch("http://www.html.it/api/articoli", {
+    method: "post",
+    headers: new Headers({
+       "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({
+       titolo: "Un articolo",
+       autore: "Mario Rossi"
+    })
+ }).then().catch()
+
+//***************************************
+ //FORMDATA con fetch
+/*
+Naturalmente il contenuto del body di una richiesta dipende da come il server 
+si aspetta i dati. Nell’esempio precedente, abbiamo supposto che il server accettasse 
+dati in formato JSON. Se invece fosse previsto l’invio di dati tramite form, potremmo 
+creare un oggetto FormData ed assegnarlo al body, come possiamo vedere nel seguente esempio:
+*/
+fetch("http://www.html.it/api/articoli", {
+    method: "post",
+    headers: new Headers({
+       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+    }),
+    body: new FormData(document.getElementById("titolo"), document.getElementById("autore"))
+ }).then().catch()
+
+//***************************************
+ //PASSAGGIO HEADER
+ /*
+ Possiamo creare una collezione di header passando al costruttore un oggetto che mappa i nomi degli header ai rispettivi valori, come nel seguente esempio:
+ */
+ var headers = new Headers({
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Custom": "Valore per headers custom"
+ });
+ //in alternativa:
+ var headers = new Headers();
+ headers.append("Content-Type", "application/json");
+ headers.append("Accept", "application/json");
+ headers.append("X-Custom", "Valore per headers custom");
+//possiamo verificare se ha un valore
+ headers.has("Set-Cookie"); //false
+ headers.has("Content-Type"); //true
+//possiamo cambiare valore
+ headers.set("Content-Type", "text/plain");
+ console.log(headers.get("Accept")); //application/json
+ headers.delete("X-Custom");
+ </script>
+</head>
+<body>
+<div id="myDiv"></div>
+</body>
+</html>

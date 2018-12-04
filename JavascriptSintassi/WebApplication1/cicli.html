@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        /*
+      inizializzazione multipla di un cliclo
+        */
+        var y;
+        var i;
+        for (i = 1, y = 1; i <= 4; i++) {
+            y = y * i;
+        }
+        //nessuna istruzione è obbligatoria qui manca inizializzazione di i
+        var y = 1;
+        var i = 1;
+        for (; i <= 4; i++) {
+            y = y * i;
+        }
+        //quasi identica a while
+        var y = 1;
+        var i = 1;
+        for (; i <= 4;) {
+            y = y * i;
+            i++;
+        }
+
+        //for in
+        var quantita = [12, 34, 45, 7, 19];
+        var totale = 0;
+        var indice;
+        for (indice in quantita) {
+            totale = totale + quantita[indice];
+        }
+        //for of (ecma6)
+        /*var quantita = [12, 34, 45, 7, 19];
+        var totale = 0;
+        var valore;
+        for (valore of quantita) {
+            totale = totale + valore;
+        }*/
+
+        //interrompere con break
+        var x = 0;
+        while (true) {
+            console.log(x);
+            // condizione di uscita
+            if (x > 100) break;
+            x++;
+        }
+
+        var x = 0;
+        while (x < 10) {
+            x++;
+            if ((x > 3) && (x < 5)) continue;
+            // se x è maggiore di 3, questa istruzione non viene più eseguita
+            console.log(x);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

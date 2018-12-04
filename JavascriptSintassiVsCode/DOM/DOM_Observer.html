@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .overClass {font-weight: bold;   color: red;}
+        .outClass  {font-weight: normal; color: black;}
+        </style>
+</head>
+<body>
+   <div id="myDiv">
+
+   </div>
+   <input id="btnAddElement" value="add element" type="button">
+</body>
+<script>
+    var Btn=document.getElementById("btnAddElement");
+    
+
+      function btn_click(e)
+    {
+    
+     var elm=   document.createElement('div');
+     var attr = document.createAttribute("id");
+    attr.value = "divInterno";
+    elm.setAttributeNode(attr);
+    var mydiv=document.getElementById("myDiv");
+    mydiv.appendChild(elm);
+    }
+
+    Btn.addEventListener('click',btn_click)
+
+  
+//oggetti che monitorano elementi del DOM ed eseguono una funzione di callback 
+//in corrispondenza di una o più modifiche della loro struttura o dei contenuti
+// mutationManager è una funzione di callback
+// che utilizzeremo per sfruttare i dati acquisiti
+// dall'observer
+
+
+//per gestire le variazioni degli elementi del DOM dobbiamo 
+//innanzitutto creare un Mutation observer ed assegnargli la funzione di callback da eseguire
+var mutationManager = function(mutationRecords) {
+	// ...Nella signature della funzione di callback dovrà necessariamente esserci come argomento un array di oggetti MutationRecords che servirà a 
+	//contenere le informazioni sulle variazioni avvenute all’elemento in osservazione
+    var i;
+	for(i=0; i < mutationRecords.length; i++) {
+		if (mutationRecords[i].type == "childList") {
+			console.log("Sono stati aggiunti " + mutationRecords[i].addedNodes.length + " elementi.");
+            console.log("id elem aggiunto " + mutationRecords[i].target.getAttribute("id"));
+		}
+	}
+};
+var observer = new MutationObserver(mutationManager);
+
+
+var div = document.getElementById("myDiv");
+//Il tutto viene effettuato tramite il metodo observe() che prevede due parametri:
+//il primo è il target: l’elemento da tenere sotto osservazione;
+//il secondo è un oggetto che descrive le variazioni a cui siamo interessati.
+
+observer.observe(div, { childList: true, attributes: true });
+//Nell’esempio abbiamo indicato di voler osservare 
+//le variazioni degli attributi del div myDiv e di eventuali modifiche dei suoi figli
+
+
+    </script>
+ 
+</html>

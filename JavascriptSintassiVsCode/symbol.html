@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+     var x = Symbol();
+     console.log(typeof x);	//risultato: symbol
+        console.log(a);
+//Ogni volta che generiamo un simbolo tramite la funzione Symbol(), 
+//JavaScript crea un valore univoco. Anche se non abbiamo un accesso 
+//diretto al valore generato, possiamo verificare l’univocità del valore nel seguente modo
+console.log(Symbol() === Symbol());	//risultato: false
+console.log(Symbol("mioSimbolo") === Symbol("mioSimbolo")); // risultato: false
+//L’assegnamento di una descrizione ad un simbolo serve per poter riconoscere in qualche modo il valore di un simbolo, come nel seguente esempio
+var x = Symbol("mioSimbolo");
+console.log(x.toString() === "Symbol(mioSimbolo)"); //risultato: true
+//Questo assegnamento crea un nuovo simbolo associato alla descrizione mioSimbolo e lo assegna alla variabile xQuesto 
+//assegnamento crea un nuovo simbolo associato alla descrizione mioSimbolo e lo assegna alla variabile x
+//A differenza dell’approccio visto prima, però, 
+//se un simbolo associato alla descrizione mioSimbolo era già stato 
+//creato tramite for(), allora viene recuperato tale valore ed assegnato alla variabile
+var x = Symbol.for("mioSimbolo");
+
+var x = Symbol.for("mioSimbolo");
+var y = Symbol.for("mioSimbolo");
+//stiamo creando un simbolo con visibilità globale a livello di runtime
+console.log(x === y); // risultato: true
+var x = Symbol.for("mioSimbolo");
+//operazione inversa a for
+console.log(Symbol.keyFor(x)); //risultato: mioSimbolo
+//esempio concreto di symbol
+var item = { descrizione: "Prodotto A", prezzo: 24.5 };
+item.id = nuovoId();
+item.id = Symbol();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

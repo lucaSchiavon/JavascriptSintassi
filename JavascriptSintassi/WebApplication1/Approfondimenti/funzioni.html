@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //*********************************
+        //CALLBACK:funzioni che prendono funzioni
+        //efinizione ed esecuzione di funzione anonima in unico passaggio
+        console.log( (function (x, y) {
+            return x + y;
+        }(4, 8)));
+
+        //callback esempio con funzione definita nel passaggio come argomento alla funzione che la prende come argomento
+        var numeri = [11, 3, 24];
+        /*
+        numeri.forEach(function (valore, indice) {
+            console.log(valore);
+        });*/
+
+        //callback esempio con funzione definita prima del passaggio come argomento alla funzione che la prende come argomento
+        function Calcola(valore, indice)
+        {
+            console.log(valore);
+        }
+        numeri.forEach(Calcola);
+
+        //**********************************
+        //FUNZIONI CHE RESTITUISCONO FUNZIONI
+        /*var incrementatore = function (incremento) {
+            return function (valore) {
+                return incremento + valore;
+            };
+        };
+        */
+
+       /* function IncrementaValore(val) {
+            return this.incremento + val;
+        }
+        var incrementatore2 = function funParente(incremento)
+        {
+            return IncrementaValore;
+        }
+        var incrementa4 = incrementatore2(4);
+        var res = incrementa4(3);*/
+
+        var persona = {
+            nome: "Mario",
+            cognome: "Rossi",
+            nomeCognome: function () {
+                return this.nome + " " + this.cognome;
+            }
+        };
+
+        console.log(persona.nomeCognome());
+
+        // saluta() prende come parametro una funzione (nomepersona)
+        // e la esegue nel proprio contesto di esecuzione.
+        function saluta(nomePersona) {
+            console.log("Buongiorno " + nomePersona()); //qui viene chiamata nomecognome fuori dal suo contesto 
+            //o meglio viene passato il metodo nomeCognome ed invocato fuori contesto
+            //quindi this è ora l'oggetto globale e non rappresenta più persona in quanto la funzione nomeCognome viene invocata nel contesto della funzione saluta il cui
+            //contesto è globale
+        }
+        saluta(persona.nomeCognome);//
+
+        //prima soluzione per eseguire la funzione nel contesto corretto
+        function salutaCall(nomePersona) {
+            console.log("Buongiorno " + nomePersona.call(persona));    //qui il contesto viene passato durante l'invocazione della funzione
+        }
+        //seconda soluzione per eseguire la funzione nel contesto corretto
+        function salutaApply(nomePersona) {
+            console.log("Buongiorno " + nomePersona.apply(persona)); //qui il contesto viene passato durante l'invocazione della funzione
+        }
+        //terza soluzione
+       
+        salutaCall(persona.nomeCognome); 
+        salutaApply(persona.nomeCognome);
+        saluta(persona.nomeCognome.bind(persona)); //qui viene slegato il passaggio del contesto dall'invocazione della funzione e viene preimpostato nel passaggio della callback
+
+
+
+
+
+
+        console.log("Stop");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

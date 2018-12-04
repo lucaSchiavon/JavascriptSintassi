@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    
+    <div id="mainDiv"><h1>Titolo</h1><p>Un paragrafo</p><p>Un altro paragrafo</p></div>
+    <a href="#" id="test">test</a>
+<!--Questa modalità è sempre meno utilizzata e poco consigliabile 
+    perché favorisce troppo l’accoppiamento tra layout della pagina (HTML) e logica applicativa (JavaScript):-->
+    <a href="#" onclick="alert('ciao')">Link</a>
+    <a href="#" onclick="alert(this.innerHTML)">Ciao</a>
+    <input type="button" value="primo">
+    <input type="button" value="secondo">
+    <input type="button" value="terzo">
+    <input type="button" value="quarto">
+</body>
+<script> 
+//Possiamo definire come handler una funzione di callback che viene associata ad un certo evento
+//I meccanismi per associare eventi e handler sono sostanzialmente tre:
+//*************************************************************
+//Via codice, sfruttando la funzione addEventListener().
+// definisce la funzione callback
+//Rispetto alle altre modalità addEventListener permette una gestione più raffinata degli handler, 
+//consente di definirne e gestirne più di uno per lo stesso evento e funziona con qualunque elemento del DOM
+// (non solo con gli elementi HTML)
+function clickOnTest(event){
+    debugger;
+    console.log('Click su test');
+}
+// ottiene l'elemento 'test'
+var test = document.getElementById('test');
+// associa l'evento click alla callback
+test.addEventListener('click', clickOnTest);
+//rimuovere associazione
+//test.removeEventListener('click', clickOnTest);
+//*************************************************************
+//All’interno del markup HTML, sfruttando speciali attributi dei tag;
+
+//Nel codice JavaScript, associando specifiche proprietà degli elementi del DOM;
+//Anche questa modalità è sempre meno utilizzata, più che altro perché risulta scomoda
+//document.images[0].onload = alert('Immagine caricata');
+
+//*************************************************************
+//L'OGGETTO THIS
+//var buttons=document.getElementsByTagName("button");
+
+var buttons=document.querySelectorAll("input[type=button]")
+debugger;
+//var handler=function(){console.log("click su..." + this.value);}; //è possibile recuperare info su oggetto contesto mediante this
+//meglio però utilizzare l'oggetto event che porta info sull'evento, quindi riscriviamo il gestore in questo modo:
+var handler = function(e) { console.log("Clic su " + e.target.value + " evento " + e.type); };
+for (var i=0;buttons.length;i++)
+{
+    buttons[i].addEventListener("click",handler)   ;
+}
+
+    </script>
+</html>

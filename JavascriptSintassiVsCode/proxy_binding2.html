@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        class Binder {
+    bindTo(dataSourceObj, dataSourceProperty, dataTargetObj, dataTargetProperty) {
+       var bindHandler = {
+          set: function(target, property, newValue) {
+             if (property == dataSourceProperty) {
+                target[dataSourceProperty] = newValue;
+                dataTargetObj[dataTargetProperty] = newValue;
+             }
+          }
+       };
+       return new Proxy(dataSourceObj, bindHandler);
+    }
+ }
+
+var persona = {
+    nome: "Mario",
+    cognome: "Rossi"
+ };
+ var txtNome = document.getElementById("txtNome");
+ var binder = new Binder();
+ var personaConBinding = binder.bindTo(persona, "nome", txtNome, "value");
+ setTimeout(function() {
+    personaConBinding.nome = "Marco";
+ }, 5000);
+    </script>
+</head>
+<body>
+<input type="text" name="txtNome" >
+</body>
+</html>

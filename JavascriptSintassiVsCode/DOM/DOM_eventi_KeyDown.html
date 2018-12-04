@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .overClass {font-weight: bold;   color: red;}
+        .outClass  {font-weight: normal; color: black;}
+        </style>
+</head>
+<body>
+    <input type="text" id="txtInput">
+        
+    </div>
+</body>
+<script>
+//quando premiamo, ad esempio, sui tasti CTRL o SHIFT si verifica l’evento keydown ma non l’evento keypress
+//keypress solo per pressione su tasti alfanumerici
+//keyup quando si rilascia
+//l'oggetto evento porta alcune importanti info:
+var txtInput = document.getElementById("txtInput");
+/*txtInput.onkeypress = function(e) {
+    //inibisce l'aggiunta di un nuovo carattere a partire dal decimo tsato in poi
+	if (e.target.value.length >= 10) e.preventDefault();
+}
+txtInput.onkeypress = function(e) {
+    //permette solo immissione di numeri
+    var charCode = e.which;
+	if (charCode < 48 || charCode > 57) e.preventDefault();
+}*/
+//converte in maiuscolo il carattere
+txtInput.onkeypress = function(e) {
+	var charCode = e.which;
+	var char;
+	if (charCode != 0) {
+		char = String.fromCharCode(charCode);
+		e.target.value = e.target.value + char.toUpperCase();
+		e.preventDefault();
+	}
+}
+//ctrl+D rimuove il testo dalla casella di testo
+txtInput.onkeydown = function(e) {
+	if (e.keyCode == 68 && e.ctrlKey) {
+		e.target.value = "";
+		e.preventDefault();
+	}
+}
+    </script>
+ 
+</html>

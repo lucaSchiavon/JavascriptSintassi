@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        window.addEventListener('load',inizializza);
+        var timerId;
+        
+
+        function inizializza()
+        {
+            
+            var BtnStart=document.getElementById('btnStart');
+            var BtnStop=document.getElementById('btnStop');
+            BtnStart.addEventListener('click',avviaAnimazione)
+            BtnStop.addEventListener('click',fermaAnimazione)
+           //BtnStart.addEventListener('click',modificaCerchio)
+            
+        }
+        function avviaAnimazione()
+        {
+            if(timerId == null) {
+		timerId = setInterval(animate, 20);
+	}
+
+        }
+        function fermaAnimazione()
+        {
+            if(timerId != null){
+		clearInterval(timerId);
+            timerId = null;
+	}
+
+        }
+
+        function animate() {
+	var cerchio = document.getElementById("cerchio");
+	var x = cerchio.getAttribute("cx");
+	var newX = 2 + parseInt(x);
+	if(newX > window.innerWidth) {
+		newX = 20;
+	}
+	cerchio.setAttribute("cx", newX);
+}
+      function modificaCerchio()
+      {
+        var cerchio = document.getElementById("cerchio");
+        cerchio.setAttribute("r", 150);
+        cerchio.style.fill = "#ff0000";
+
+      }
+    </script>
+</head>
+<body>
+    <div> <input type="button" id="btnStart" value="start"><input type="button" id="btnStop" value="stop"></div>
+  
+            <svg>
+                    <circle id="cerchio"
+                            cx="100" cy="100" r="50"
+                            style="stroke: #000000; fill: #00ff00;" />
+                </svg>
+
+   
+       
+</body>
+</html>

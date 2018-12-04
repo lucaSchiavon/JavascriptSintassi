@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var saluto = "Buongiorno";
+        var visualizzaSaluti;
+        function saluta(persone) {
+            var nomeCognome;
+            var saluti = [];
+            for (var i in persone) {
+                nomeCognome = persone[i].nome + " " + persone[i].cognome;
+                saluti.push(function () {
+                    console.log(saluto + " " + nomeCognome);
+                });
+            }
+            return saluti; //quando viene restituito l'array il valore di nomeecognome è valorizzato con l'ultimo oggetto persona della'rray
+        }
+        visualizzaSaluti = saluta([{ nome: "Mario", cognome: "Rossi" },
+        { nome: "Marco", cognome: "Neri" }]);
+        for (var i in visualizzaSaluti) {
+            visualizzaSaluti[i]();
+        }
+
+
+        function saluta2(persone) {
+            var nomeCognome;
+            var saluti = [];
+            for (var i in persone) {
+                nomeCognome = persone[i].nome + " " + persone[i].cognome;
+                saluti.push((function (nc) { return function () { console.log(saluto + nc) }; })(nomeCognome));
+            }
+            return saluti; //quando viene restituito l'array il valore di nomeecognome è valorizzato con l'ultimo oggetto persona della'rray
+        }
+
+        visualizzaSaluti2 = saluta2([{ nome: "Mario", cognome: "Rossi" }, { nome: "Marco", cognome: "Neri" }]);
+        for (var i in visualizzaSaluti2)
+        {
+            visualizzaSaluti2[i]();
+        }
+        console.log("Stop");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

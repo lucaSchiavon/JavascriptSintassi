@@ -1,0 +1,9 @@
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\bin\WebApplication1.dll.config
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\bin\WebApplication1.dll
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\bin\WebApplication1.pdb
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
+D:\L_SCHIAVON_DOCUMENTS\LAVORO\PROGETTI\Javascript\Esempi\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //qui semplicemente si dimostra come accederre a delle variabili globali ed ai parametri in ingresso all'interno dello funzione saluta
+        //tutto regolare per le regole di scope delle variabili...
+        var saluto = "Buongiorno";
+        function saluta(persona) {
+            var nomeCognome = persona.nome + " " + persona.cognome;
+            function visualizzaSaluto() {
+                //in più qui la funzione accede a nomecognome definita non nello scope della funzione e neanche globalmente ma nella funzione che la contiene
+                //quindi è possibile avere una gerarchia di scope
+                console.log(saluto + " " + nomeCognome);
+            }
+            visualizzaSaluto();
+        }
+        saluta({ nome: "Mario", cognome: "Rossi" });
+
+        //**********************************
+        //CLOSURE
+        var saluto = "Buongiorno";
+        var visualizzaSaluto;
+        function saluta(persona) {
+            var nomeCognome = persona.nome + " " + persona.cognome;
+            return function () {
+                console.log(saluto + " " + nomeCognome);
+            };
+        }
+        visualizzaSaluto = saluta({ nome: "Mario", cognome: "Rossi" });
+        visualizzaSaluto(); //qui viene invocata la funzione saluta quando la funzione più esterna è stata già eseguita quindi il suo contesto di esecuzione non esiste più
+        //eppure nomeCognome è ancora presente nello scope locale
+        //definizione di closure: ogni variabile che era accessibile quando una funzione è stata definita rimane "racchiusa" nello scope accessibile dalla funzione
+
+
+        console.log("Stop");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

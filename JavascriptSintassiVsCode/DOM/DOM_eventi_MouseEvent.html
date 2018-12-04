@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .overClass {font-weight: bold;   color: red;}
+        .outClass  {font-weight: normal; color: black;}
+        </style>
+</head>
+<body>
+    
+    <div id="obiettivo" style="width:100px;height:100px;border-style: solid">
+        <p id="paragrafo">Clicca su questo paragrafo</p>
+    </div>
+    <div id="menu"  style="width:100px;height:100px;border-style: solid;display:none">
+        <ul>
+            <li>opzione 1</li>
+            <li>opzione 2</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var myParagrafo = document.getElementById("paragrafo");
+    myParagrafo.ondblclick = function(e) {
+        e.target.innerHTML = "Hai fatto doppio click sul paragrafo!";
+    };
+
+    
+
+var myParagrafo = document.getElementById("paragrafo");
+myParagrafo.onmouseover = function(e) { e.target.className = "overClass"; };
+myParagrafo.onmouseout  = function(e) { e.target.className = "outClass";  };
+
+//Se vogliamo concentrarci soltanto sugli eventi di entrata 
+//ed uscita sull’area occupata dall’elemento padre dobbiamo utilizzare 
+//due eventi alternativi: mouseenter e mouseleave.
+//Il loro utilizzo è sostanzialmente analogo a mouseover e mouseout, 
+//ma a differenza di questi ultimi non vengono coinvolti gli elementi discendenti
+
+//esempio di mouseevent: ci da il pulsante premuto...
+/*var myParagrafo = document.getElementById("paragrafo");
+myParagrafo.onmousedown = function(e) {
+	switch(e.button) {
+		case 0:
+			console.log("Hai cliccato con il pulsante sinistro");
+			break;
+		case 1:
+			console.log("Hai cliccato con il pulsante centrale");
+			break;
+		case 2:
+			console.log("Hai cliccato con il pulsante destro");
+			break;
+	}
+};*/
+//sempre mouseevent ci da la posizione rispetto la finestra o la pagina
+/*document.onmousemove = function(e) {
+    console.log("Posizione rispetto alla finestra: " + e.clientX + ", " + e.clientY);
+  console.log("Posizione rispetto alla pagina: " + e.pageX + ", " + e.pageY);
+};
+
+
+myParagrafo.onmouseleave = function(e) {
+	console.log("Il cursore si trova ora sull'elemento " + e.relatedTarget.id);
+};*/
+
+myParagrafo.onmouseleave = function(e) {
+	
+    console.log("Il cursore si trova ora sull'elemento " + e.relatedTarget.id);
+};
+
+//CREARE MENU CONTESTUALE:
+//Un evento che può risultare utile per personalizzare il comportamento standard del browser è contextmenu
+document.oncontextmenu = function(e) {
+	debugger;
+    var myMenu = document.getElementById("menu");
+	myMenu.style.position = "absolute";
+	myMenu.style.left = e.pageX + "px";
+	myMenu.style.top = e.pageY + "px";
+	//myMenu.style.visibility = "visible";
+    myMenu.style.display="inline"
+	e.preventDefault();
+};
+    </script>
+ 
+</html>

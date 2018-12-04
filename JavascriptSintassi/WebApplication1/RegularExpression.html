@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //istruzioni analoghe
+        var x = new RegExp("abc");
+        var y = /abc/;
+
+           /*
+        i	esegue una ricerca ignorando la distinzione tra maiuscole e minuscole
+        g	esegue una ricerca globale, cioè individua tutte le occorrenza di un pattern
+        m	esegue una ricerca su stringhe multilinea
+        */
+        var x = new RegExp("abc", "i");
+        var y = /abc/i;
+        var x = new RegExp("abc", "ig");
+        var y = /abc/ig;
+
+        //test verifica se la stringa passata all'espressione regolare meccia o no
+        var y = /\d/;
+        y.test("str1nga");	//true
+        y.test("stringa");	//false
+
+        //il metodo exec restituisce la sottostringa
+        var y = /\d/;
+        y.exec("str1nga");	//["1"]
+        y.exec("stringa");	//null
+
+        var y = /\d/g;
+        y.exec("str1ng4");	//["1"]
+        y.exec("str1ng4");	//["4"]
+        y.exec("str1ng4");	//null
+
+        var x = "str1nga".search(/\d/); //3
+        var x = "str1nga".split(/\d/);	//["str", "nga"]
+
+        var x = "str1ng4".replace(/\d/g, "numero");	//"strnumerongnumero"
+        var x = "str1ng4".match(/\d/g);	//["1", "4"]
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

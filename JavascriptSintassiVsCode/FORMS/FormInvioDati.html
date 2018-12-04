@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+		//gestisce l'invio dati del form mediante bottone submit
+		document.forms.myForm.addEventListener('submit', function(e) {
+			// ...
+			e.preventDefault();
+		});
+		//se vogliamo creare un link personalizzato per effettuare il submit
+		//viene gestito l'invio dei dati del form
+		var lnkSubmit = document.getElementById('lnkSubmit');
+		lnkSubmit.addEventListener('click', function(e) {
+			document.forms.myForm.submit();
+			e.preventDefault();
+		});
+//possiamo invocare la nostra funzione di inizializzazione ed inibire il reset predefinito del form
+//perchè con reset il form viene resettato
+		document.forms.myForm.addEventListener('reset', function(e) {
+			inizializzaForm();
+			e.preventDefault();
+		});
+		//oppure usare pulsante personalizzato per reset
+		var lnkReset = document.getElementById('lnkReset');
+lnkReset.addEventListener('click', function(e) {
+	document.forms.myForm.reset();
+	e.preventDefault();
+});
+    </script>
+</head>
+<body>
+        <form id="myForm">
+                <input type="text" name="txtNome" />
+        </form>
+            
+</body>
+</html>

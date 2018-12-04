@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        window.addEventListener('load',inizializza)
+        function inizializza()
+        {
+
+            var images = ["immagini/prova_4.jpg", "immagini/prova_5.jpg"];
+            var img = document.getElementById("img");
+            var btnNextImg = document.getElementById("btnNextImage");
+            var currentImageIndex = 0;
+            //al click del bottone cambio immagine
+            btnNextImg.onclick = function () {
+               
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+  img.src = images[currentImageIndex];
+            };
+//banner ad intervalli regolari
+             setInterval(function () {
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  img.src = images[currentImageIndex];
+}, 10000);
+        }
+
+//la creazione di un oggetto Image fa sì che l’immagine corrispondente 
+//venga caricata nella cache del browser senza essere visualizzata sulla pagina.
+//buono specialmente quando le immagini sono pesanti
+var images = [];
+var img1 = new Image();
+img1.src = "img1.jpg";
+images.push(img1);
+var img2 = new Image();
+img2.src = "img2.jpg";
+images.push(img2);
+var img3 = new Image();
+img3.src = "img3.jpg";
+images.push(img3);
+    </script>
+</head>
+<body>
+    
+<div><input type="Button" id="btnNextImage"></div>
+<div><img id="img"></div>
+
+</body>
+</html>

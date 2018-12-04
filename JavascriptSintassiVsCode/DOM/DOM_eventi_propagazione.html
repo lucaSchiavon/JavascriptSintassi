@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   
+</head>
+<body>
+    <!--mmaginiamo ora di voler gestire il clic sul primo paragrafo e sul <div>.....
+       Dal momento che si tratta di elementi contenuti l’uno all’interno dell’altro, 
+       vengono spontanee alcune domande: quale dei due elementi catturerà l’evento click? 
+       Se lo catturano entrambi, chi lo catturerà per primo? -->
+    <div id="mainDiv">
+        <p id="paragrafo1">Clicca su questo paragrafo</p>
+        <p id="paragrafo2">Altro paragrafo</p>
+    </div>    
+    <a id="link" href="http://www.html.it">HTML.it</a>
+</body>
+<script> 
+//possiamo desumere che verrà eseguito per primo il gestore del clic sul primo paragrafo 
+//e dopo il gestore del clic sul <div> (vedi tre fasi di propagazione evento; capture phase, 
+//target phase e bubble phase)
+var myDiv = document.getElementById("mainDiv");
+var myParagrafo = document.getElementById("paragrafo1");
+var handler = function() { console.log(this.id)}; //Differenza tra target e this: La proprietà target fa riferimento sempre all’oggetto destinatario dell’evento, mentre this rappresenta l’oggetto che in quel momento sta gestendo l’evento
+var handler = function(e) { 
+    console.log(e.target.id)
+    console.log(this.id)
+    e.stopPropagation();//annulla la fase di bubbling, quindi verrà eseguito solo il gestore dell'evento sul paragrafo e non quello sul div
+};
+myDiv.addEventListener("click", handler);
+
+myParagrafo.addEventListener("click", handler);
+//se volessimo fare in modo che prima venga gestito il clic sul <div> e poi quello sul paragrafo? 
+//Possiamo farlo sfruttando un terzo parametro opzionale del metodo addEventListener()
+//Questo parametro abilita la gestione dell’evento nella fase di capturing, 
+//consentendo quindi la sua intercettazione prima che arrivi al destinatario effettivo:
+//myDiv.addEventListener("click", handler, true);
+//Immaginiamo ora di voler fare in modo che quando si clicca sul primo paragrafo 
+//venga eseguito soltanto il gestore del clic del paragrafo e non quello del <div>, 
+//mentre quando si clicca all’esterno del primo paragrafo, ad esempio sul secondo paragrafo, 
+//venga eseguito il gestore del <div>.
+//Possiamo ottenere questo effetto interrompendo il 
+//flusso di propagazione dell’evento tramite il metodo stopPropagation()
+
+//Un’altra interessante possibilità è l’inibizione del comportamento predefinito 
+//in corrispondenza di certi eventi. Supponiamo ad esempio l’evento clic su un link
+var link = document.getElementById("link");
+//link.addEventListener("click", function() {alert("Stai lasciando questa pagina...");});
+link.addEventListener("click", function(e) {alert("Stai lasciando questa pagina...");
+e.preventDefault();
+});
+    </script>
+</html>
